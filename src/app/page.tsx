@@ -5,6 +5,7 @@ import { CustomCursor } from "@/components/CustomCursor";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { BrandStrip } from "@/components/BrandStrip";
+import { FilmCreditsCarousel } from "@/components/FilmCreditsCarousel";
 import { SelectedProjects } from "@/components/SelectedProjects";
 import { StudioSpecs } from "@/components/StudioSpecs";
 import { ContactSection } from "@/components/ContactSection";
@@ -18,6 +19,7 @@ export default function Home() {
         <Navbar />
         <Hero />
         <BrandStrip />
+        <FilmCreditsCarousel />
         <SelectedProjects />
         <StudioSpecs />
         <ContactSection />

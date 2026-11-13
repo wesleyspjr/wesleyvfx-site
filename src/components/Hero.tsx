@@ -15,16 +15,16 @@ export function Hero() {
 
   return (
     <section id="hero" className="relative min-h-[95vh] pt-32 pb-24 flex flex-col justify-center items-center px-4 sm:px-6 overflow-hidden">
-      {/* Background Ambient Media Loop (Exact original media from Wix site) */}
+      {/* Background Ambient Media Loop (Local High-speed GIF from original Wix site) */}
       <div className="absolute inset-0 pointer-events-none -z-20 overflow-hidden">
         <img
-          src="https://static.wixstatic.com/media/8b4d3c_6a7ba1e0b5c64d5b84bcf7b707e78c46~mv2.gif"
+          src="/hero-bg.gif"
           alt="Wesley VFX Background"
-          className="w-full h-full object-cover filter brightness-[0.25] contrast-125 saturate-50 scale-105"
+          className="w-full h-full object-cover filter brightness-[0.45] contrast-110 saturate-75 scale-105"
         />
-        {/* Cinematic dark gradients on top/bottom */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-[#080808]/75 to-[#080808]/90" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#080808_85%)]" />
+        {/* Soft atmospheric gradient allowing video to be visible */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-[#080808]/50 to-[#080808]/70" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_20%,#080808_90%)]" />
       </div>
 
       <div className="w-full max-w-5xl mx-auto flex flex-col items-center text-center relative z-10">
