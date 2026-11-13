@@ -16,7 +16,10 @@ export function SelectedProjects() {
   const { t } = useLanguage();
 
   return (
-    <section id="works" className="py-24 max-w-7xl mx-auto px-4 sm:px-6">
+    <section id="works" className="py-28 max-w-7xl mx-auto px-4 sm:px-6 relative overflow-hidden">
+      {/* Cosmic Nebula Glows behind Selected Works */}
+      <div className="absolute top-1/4 left-0 w-[550px] h-[350px] bg-purple-900/20 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-0 w-[500px] h-[350px] bg-pink-900/15 rounded-full blur-[140px] pointer-events-none" />
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
         <div>

@@ -19,7 +19,10 @@ export function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-28 max-w-4xl mx-auto px-4 sm:px-6">
+    <section id="contact" className="py-28 max-w-4xl mx-auto px-4 sm:px-6 relative overflow-hidden">
+      {/* Cosmic Nebula Accent Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[450px] bg-purple-950/25 rounded-full blur-[160px] pointer-events-none" />
+      <div className="relative z-10">
       <div className="flex flex-col items-center text-center mb-12">
         <div className="flex items-center gap-2 mb-3">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
@@ -86,6 +89,7 @@ export function ContactSection() {
             </a>
           )}
         </div>
+      </div>
       </div>
     </section>
   );

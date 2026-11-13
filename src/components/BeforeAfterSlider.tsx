@@ -114,7 +114,7 @@ export function BeforeAfterSlider() {
           <img
             src={item.beforeImage}
             alt={item.beforeLabel[lang]}
-            className="w-full h-full object-cover filter contrast-90 brightness-95"
+            className="w-full h-full object-cover"
           />
           <div className="absolute top-4 left-4 z-10 flex items-center gap-1.5 bg-black/80 backdrop-blur-md border border-neutral-700/80 px-3 py-1.5 rounded-full text-[11px] font-mono text-amber-400 font-medium">
             <Layers className="w-3.5 h-3.5" />

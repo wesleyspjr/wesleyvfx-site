@@ -60,14 +60,14 @@ export function FilmCreditsCarousel() {
     },
   ];
 
-  // Quadruple the array to ensure completely continuous infinite marquee with ZERO gaps
+  // Quadruple for smooth continuous infinite loop with 0% gaps
   const marqueeItems = [...realCredits, ...realCredits, ...realCredits, ...realCredits];
 
   return (
-    <section className="py-24 border-b border-neutral-900/80 bg-[#04040a]/80 overflow-hidden relative">
+    <section className="py-24 border-b border-neutral-900/80 bg-black/40 overflow-hidden relative">
       {/* Background ambient cosmic glow */}
-      <div className="absolute top-1/2 left-1/3 -translate-y-1/2 w-96 h-48 bg-purple-900/15 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-80 h-40 bg-cyan-900/15 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/3 -translate-y-1/2 w-[500px] h-64 bg-purple-900/20 rounded-full blur-[130px] pointer-events-none" />
+      <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[400px] h-52 bg-cyan-900/20 rounded-full blur-[110px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 mb-12 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div>
@@ -91,13 +91,13 @@ export function FilmCreditsCarousel() {
         </a>
       </div>
 
-      {/* Infinite Seamless Auto Marquee Track (Never stops on hover, zero gap) */}
-      <div className="relative w-full overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_96px,_black_calc(100%-96px),transparent_100%)]">
-        <div className="flex items-center gap-6 w-max animate-marquee-slow">
+      {/* Infinite Seamless Auto Marquee Track - Centered, ~5 posters in view with smooth edge fade */}
+      <div className="relative max-w-7xl mx-auto overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_180px,_black_calc(100%-180px),transparent_100%)]">
+        <div className="flex items-center gap-7 w-max animate-marquee-slow py-2">
           {marqueeItems.map((item, idx) => (
             <div
               key={idx}
-              className="group relative w-52 sm:w-60 aspect-[2/3] rounded-2xl overflow-hidden bg-neutral-950 border border-purple-500/20 hover:border-purple-400/80 transition-all duration-300 flex-shrink-0 shadow-2xl cursor-pointer"
+              className="group relative w-60 sm:w-64 aspect-[2/3] rounded-2xl overflow-hidden bg-neutral-950 border border-purple-500/20 hover:border-purple-400 transition-all duration-300 flex-shrink-0 shadow-2xl cursor-pointer hover:scale-105"
             >
               {/* Poster Image */}
               <img
