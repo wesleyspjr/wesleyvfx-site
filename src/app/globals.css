@@ -2,8 +2,12 @@
 
 @layer base {
   :root {
-    --background: #080808;
-    --foreground: #ededed;
+    /* Cosmic Galaxy Palette */
+    --background: #04040a; /* Deep space abyss */
+    --foreground: #f1f0fb; /* Starlight bright */
+    --nebula-purple: #8b5cf6;
+    --nebula-magenta: #ec4899;
+    --nebula-cyan: #06b6d4;
   }
 
   body {
@@ -11,6 +15,12 @@
     color: var(--foreground);
     font-family: var(--font-geist-sans), system-ui, sans-serif;
     overflow-x: hidden;
+    /* Subtle starry cosmic background grain */
+    background-image: 
+      radial-gradient(circle at 15% 15%, rgba(139, 92, 246, 0.08) 0%, transparent 40%),
+      radial-gradient(circle at 85% 35%, rgba(6, 182, 212, 0.07) 0%, transparent 45%),
+      radial-gradient(circle at 50% 80%, rgba(236, 72, 153, 0.06) 0%, transparent 50%);
+    background-attachment: fixed;
   }
 }
 
@@ -21,20 +31,50 @@
   }
 }
 
-/* Custom smooth dark scrollbar */
+/* Smooth continuous infinite marquee animation for logos and posters */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 35s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+.animate-marquee-slow {
+  display: flex;
+  width: max-content;
+  animation: marquee 50s linear infinite;
+}
+
+.animate-marquee-slow:hover {
+  animation-play-state: paused;
+}
+
+/* Custom smooth cosmic scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #080808;
+  background: #04040a;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #262626;
+  background: #231b3e;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #404040;
+  background: #4c327a;
 }

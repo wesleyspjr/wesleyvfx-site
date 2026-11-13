@@ -14,37 +14,37 @@ export function Hero() {
   const activeReel = PROFILE.reels[activeReelKey];
 
   return (
-    <section id="hero" className="relative min-h-[95vh] pt-32 pb-24 flex flex-col justify-center items-center px-4 sm:px-6 overflow-hidden">
-      {/* Background Ambient Media Loop (Local High-speed GIF from original Wix site) */}
-      <div className="absolute inset-0 pointer-events-none -z-20 overflow-hidden">
+    <section id="hero" className="relative min-h-[95vh] pt-32 pb-24 flex flex-col justify-center items-center px-4 sm:px-6 overflow-hidden isolate">
+      {/* Background Ambient Media Loop (Fixed stacking context with z-0) */}
+      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
         <img
           src="/hero-bg.gif"
           alt="Wesley VFX Background"
-          className="w-full h-full object-cover filter brightness-[0.45] contrast-110 saturate-75 scale-105"
+          className="w-full h-full object-cover filter brightness-[0.55] contrast-125 saturate-100 scale-105"
         />
-        {/* Soft atmospheric gradient allowing video to be visible */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-[#080808]/50 to-[#080808]/70" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_20%,#080808_90%)]" />
+        {/* Cosmic Nebula gradients overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#04040a] via-[#04040a]/40 to-[#04040a]/65" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_25%,#04040a_92%)]" />
       </div>
 
       <div className="w-full max-w-5xl mx-auto flex flex-col items-center text-center relative z-10">
-        {/* Availability Badge */}
-        <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-neutral-900/80 border border-neutral-800/80 backdrop-blur-md mb-8 animate-in fade-in duration-500">
-          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-          <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-neutral-300">
+        {/* Availability Badge with Galaxy Glow */}
+        <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-neutral-900/80 border border-purple-500/30 backdrop-blur-md mb-8 animate-in fade-in duration-500 shadow-lg shadow-purple-950/20">
+          <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+          <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-neutral-200">
             {t("hero.status")}
           </span>
           <span className="text-neutral-700">·</span>
-          <span className="text-[11px] font-mono tracking-wider text-neutral-400">
+          <span className="text-[11px] font-mono tracking-wider text-purple-300">
             {t("hero.location")}
           </span>
         </div>
 
         {/* Big Headline */}
-        <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-white uppercase mb-6 max-w-4xl">
+        <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-white uppercase mb-6 max-w-4xl drop-shadow-md">
           {t("hero.headline")}
         </h1>
-        <p className="max-w-2xl text-base sm:text-lg text-neutral-400 font-normal leading-relaxed mb-12">
+        <p className="max-w-2xl text-base sm:text-lg text-neutral-300 font-normal leading-relaxed mb-12 drop-shadow">
           {t("hero.bio")}
         </p>
 
@@ -55,33 +55,33 @@ export function Hero() {
               onClick={() => setActiveReelKey("compositing")}
               className={`flex items-center gap-2 px-5 sm:px-6 py-2.5 rounded-lg text-xs font-mono tracking-widest transition-all uppercase ${
                 activeReelKey === "compositing"
-                  ? "bg-neutral-800 text-white shadow-xl border border-neutral-700 font-semibold"
+                  ? "bg-purple-950/70 text-purple-200 shadow-xl border border-purple-600/70 font-semibold"
                   : "text-neutral-400 hover:text-neutral-200"
               }`}
             >
-              <Film className="w-3.5 h-3.5 text-emerald-400" />
+              <Film className="w-3.5 h-3.5 text-cyan-400" />
               {t("hero.compositingReelTab")}
             </button>
             <button
               onClick={() => setActiveReelKey("motion")}
               className={`flex items-center gap-2 px-5 sm:px-6 py-2.5 rounded-lg text-xs font-mono tracking-widest transition-all uppercase ${
                 activeReelKey === "motion"
-                  ? "bg-neutral-800 text-white shadow-xl border border-neutral-700 font-semibold"
+                  ? "bg-purple-950/70 text-purple-200 shadow-xl border border-purple-600/70 font-semibold"
                   : "text-neutral-400 hover:text-neutral-200"
               }`}
             >
-              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              <Sparkles className="w-3.5 h-3.5 text-pink-400" />
               {t("hero.motionReelTab")}
             </button>
           </div>
 
-          {/* Reel Display Card (With data-cursor="play") */}
+          {/* Reel Display Card */}
           <div
             data-cursor="play"
             onClick={() => setModalOpen(true)}
-            className="group relative w-full aspect-[16/9] rounded-2xl overflow-hidden border border-neutral-800/90 bg-neutral-950 cursor-pointer shadow-2xl transition-all duration-500 hover:border-neutral-700"
+            className="group relative w-full aspect-[16/9] rounded-2xl overflow-hidden border border-purple-500/20 bg-neutral-950 cursor-pointer shadow-2xl transition-all duration-500 hover:border-purple-500/50 hover:shadow-purple-950/30"
           >
-            {/* Thumbnail Poster (Official YouTube / Vimeo thumbs) */}
+            {/* Thumbnail Poster */}
             <img
               src={
                 activeReelKey === "compositing"
@@ -107,7 +107,7 @@ export function Hero() {
               </div>
 
               <div className="hidden sm:flex items-center gap-3 bg-black/75 backdrop-blur-md px-3.5 py-1.5 rounded-md border border-neutral-800 text-[11px]">
-                <span className="text-emerald-400 font-mono">
+                <span className="text-cyan-400 font-mono">
                   {activeReelKey === "compositing" ? "YOUTUBE 4K" : "VIMEO HD"}
                 </span>
                 <span className="text-neutral-600">·</span>
