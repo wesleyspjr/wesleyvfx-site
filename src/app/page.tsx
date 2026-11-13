@@ -1,0 +1,21 @@
+import { Navbar } from "@/components/Navbar";
+import { Hero } from "@/components/Hero";
+import { BrandStrip } from "@/components/BrandStrip";
+import { SelectedProjects } from "@/components/SelectedProjects";
+import { WorkflowSpecs } from "@/components/WorkflowSpecs";
+import { ContactSection } from "@/components/ContactSection";
+import { Footer } from "@/components/Footer";
+
+export default function Home() {
+  return (
+    <main className="min-h-screen bg-[#080808] text-neutral-100 flex flex-col selection:bg-white selection:text-black">
+      <Navbar />
+      <Hero />
+      <BrandStrip />
+      <SelectedProjects />
+      <WorkflowSpecs />
+      <ContactSection />
+      <Footer />
+    </main>
+  );
+}
