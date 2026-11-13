@@ -14,21 +14,24 @@ export function Hero() {
   const activeReel = PROFILE.reels[activeReelKey];
 
   return (
-    <section id="hero" className="relative min-h-[95vh] pt-32 pb-24 flex flex-col justify-center items-center px-4 sm:px-6 overflow-hidden isolate">
-      {/* Background Ambient Media Loop (Fixed stacking context with z-0) */}
+    <section id="hero" className="relative min-h-[96vh] pt-32 pb-24 flex flex-col justify-center items-center px-4 sm:px-6 overflow-hidden isolate">
+      {/* Background High-Definition Original Action VFX Video (No blue halo, no banding) */}
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-        <img
-          src="/hero-bg.gif"
-          alt="Wesley VFX Background"
-          className="w-full h-full object-cover filter brightness-[0.55] contrast-125 saturate-100 scale-105"
-        />
-        {/* Cosmic Nebula gradients overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#04040a] via-[#04040a]/40 to-[#04040a]/65" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_25%,#04040a_92%)]" />
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover filter brightness-[0.70] contrast-110 saturate-90 scale-100"
+        >
+          <source src="/hero-bg.mp4" type="video/mp4" />
+        </video>
+        {/* Soft linear fade on top/bottom to blend seamlessly with navbar and content */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#04040a]/70 via-black/20 to-[#04040a]" />
       </div>
 
       <div className="w-full max-w-5xl mx-auto flex flex-col items-center text-center relative z-10">
-        {/* Availability Badge with Galaxy Glow */}
+        {/* Availability Badge */}
         <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-neutral-900/80 border border-purple-500/30 backdrop-blur-md mb-8 animate-in fade-in duration-500 shadow-lg shadow-purple-950/20">
           <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
           <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-neutral-200">
@@ -41,7 +44,7 @@ export function Hero() {
         </div>
 
         {/* Big Headline */}
-        <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-white uppercase mb-6 max-w-4xl drop-shadow-md">
+        <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-white uppercase mb-6 max-w-4xl drop-shadow-lg">
           {t("hero.headline")}
         </h1>
         <p className="max-w-2xl text-base sm:text-lg text-neutral-300 font-normal leading-relaxed mb-12 drop-shadow">

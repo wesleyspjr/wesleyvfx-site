@@ -8,14 +8,14 @@ export function FilmCreditsCarousel() {
   const { lang } = useLanguage();
   const isPt = lang === "pt";
 
-  // Official IMDb Credits from https://www.imdb.com/pt/name/nm15395029/
+  // Official IMDb Credits with local poster images from public/imdb-posters/
   const realCredits = [
     {
       title: "Lear Rex",
       subtitle: "Al Pacino · Jessica Chastain",
       role: isPt ? "Artista de Efeitos Visuais" : "Visual Effects Artist",
       year: "2025/2026",
-      poster: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=600&auto=format&fit=crop",
+      poster: "/imdb-posters/Lear Rex.jpg",
       badge: "HOLLYWOOD FEATURE",
     },
     {
@@ -23,7 +23,7 @@ export function FilmCreditsCarousel() {
       subtitle: "Festival de Veneza 2024 · Ben Foster",
       role: isPt ? "Artista de Efeitos Visuais" : "Visual Effects Artist",
       year: "2024",
-      poster: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=600&auto=format&fit=crop",
+      poster: "/imdb-posters/King ivory.jpg",
       badge: "VENICE FILM FESTIVAL",
     },
     {
@@ -31,7 +31,7 @@ export function FilmCreditsCarousel() {
       subtitle: "Disney+ Original Series",
       role: isPt ? "Efeitos Visuais & Motion" : "Visual Effects & Motion",
       year: "2025",
-      poster: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=600&auto=format&fit=crop",
+      poster: "/imdb-posters/Passinho.jpg",
       badge: "DISNEY+ ORIGINAL",
     },
     {
@@ -39,7 +39,7 @@ export function FilmCreditsCarousel() {
       subtitle: "Feature Film",
       role: isPt ? "Artista de Efeitos Visuais" : "Visual Effects Artist",
       year: "2024/2025",
-      poster: "https://images.unsplash.com/photo-1514565131-fce0801e5785?q=80&w=600&auto=format&fit=crop",
+      poster: "/imdb-posters/Gracias Padre.jpg",
       badge: "FEATURE PRODUCTION",
     },
     {
@@ -47,7 +47,7 @@ export function FilmCreditsCarousel() {
       subtitle: "Direção: Halder Gomes",
       role: isPt ? "Efeitos Visuais" : "Visual Effects",
       year: "2026",
-      poster: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=600&auto=format&fit=crop",
+      poster: "/imdb-posters/Shaolin.jpg",
       badge: "THEATRICAL RELEASE",
     },
     {
@@ -55,21 +55,21 @@ export function FilmCreditsCarousel() {
       subtitle: "Produção Nacional",
       role: isPt ? "Efeitos Visuais" : "Visual Effects",
       year: "2025",
-      poster: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=600&auto=format&fit=crop",
+      poster: "/imdb-posters/The last rodeo.jpg",
       badge: "DRAMA SERIES",
     },
   ];
 
-  // Duplicate for seamless infinite marquee loop
-  const marqueeItems = [...realCredits, ...realCredits];
+  // Quadruple the array to ensure completely continuous infinite marquee with ZERO gaps
+  const marqueeItems = [...realCredits, ...realCredits, ...realCredits, ...realCredits];
 
   return (
-    <section className="py-20 border-b border-neutral-900 bg-[#04040a]/80 overflow-hidden relative">
+    <section className="py-24 border-b border-neutral-900/80 bg-[#04040a]/80 overflow-hidden relative">
       {/* Background ambient cosmic glow */}
       <div className="absolute top-1/2 left-1/3 -translate-y-1/2 w-96 h-48 bg-purple-900/15 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-80 h-40 bg-cyan-900/15 rounded-full blur-[100px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 mb-10 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 mb-12 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-2">
             <Clapperboard className="w-4 h-4 text-cyan-400" />
@@ -85,25 +85,25 @@ export function FilmCreditsCarousel() {
           href="https://www.imdb.com/pt/name/nm15395029/"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-xs font-mono text-purple-400 hover:text-white transition-colors flex items-center gap-1.5 uppercase tracking-widest bg-purple-950/40 border border-purple-800/60 px-3 py-1.5 rounded-full"
+          className="text-xs font-mono text-purple-300 hover:text-white transition-colors flex items-center gap-2 uppercase tracking-widest bg-purple-950/40 border border-purple-800/60 px-4 py-2 rounded-full shadow-lg hover:border-purple-500"
         >
           <span>{isPt ? "VER NO IMDB PRO" : "VIEW ON IMDB"}</span>
         </a>
       </div>
 
-      {/* Infinite Auto Marquee Track (Smooth Continuous Loop) */}
+      {/* Infinite Seamless Auto Marquee Track (Never stops on hover, zero gap) */}
       <div className="relative w-full overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_96px,_black_calc(100%-96px),transparent_100%)]">
         <div className="flex items-center gap-6 w-max animate-marquee-slow">
           {marqueeItems.map((item, idx) => (
             <div
               key={idx}
-              className="group relative w-56 sm:w-64 aspect-[2/3] rounded-2xl overflow-hidden bg-neutral-950 border border-purple-500/20 hover:border-purple-400 transition-all duration-300 flex-shrink-0 shadow-2xl cursor-pointer"
+              className="group relative w-52 sm:w-60 aspect-[2/3] rounded-2xl overflow-hidden bg-neutral-950 border border-purple-500/20 hover:border-purple-400/80 transition-all duration-300 flex-shrink-0 shadow-2xl cursor-pointer"
             >
               {/* Poster Image */}
               <img
                 src={item.poster}
                 alt={item.title}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter brightness-85 group-hover:brightness-100"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter brightness-90 group-hover:brightness-100"
               />
 
               {/* Bottom Info Gradient */}
@@ -114,10 +114,10 @@ export function FilmCreditsCarousel() {
                 <h3 className="text-sm sm:text-base font-bold text-white tracking-tight leading-snug mb-0.5 group-hover:text-purple-300 transition-colors">
                   {item.title}
                 </h3>
-                <p className="text-[11px] font-sans text-neutral-400 mb-1 line-clamp-1">
+                <p className="text-[11px] font-sans text-neutral-300 mb-1 line-clamp-1">
                   {item.subtitle}
                 </p>
-                <p className="text-[10px] font-mono text-neutral-500">
+                <p className="text-[10px] font-mono text-neutral-400">
                   {item.role}
                 </p>
               </div>

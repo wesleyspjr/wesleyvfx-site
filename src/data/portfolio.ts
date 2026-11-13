@@ -186,7 +186,7 @@ export const PROJECTS: Project[] = [
   },
 ];
 
-// Breakdown comparisons: Green Screen & Cleanup
+// Breakdown comparisons using user's actual local files in public/breakdowns/
 export const BREAKDOWN_COMPARISONS: Record<"greenscreen" | "cleanup", BreakdownPair> = {
   greenscreen: {
     id: "greenscreen",
@@ -194,10 +194,10 @@ export const BREAKDOWN_COMPARISONS: Record<"greenscreen" | "cleanup", BreakdownP
       en: "Green Screen Keying & Environment Integration",
       pt: "Extração de Green Screen & Integração de Cenário",
     },
-    project: "Hollywood Feature Sequence",
-    tools: ["Nuke", "IBK Colour / Primatte", "Light Wrap", "Depth Grade"],
-    beforeImage: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=1600&auto=format&fit=crop",
-    afterImage: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1600&auto=format&fit=crop",
+    project: "Production Feature Sequence",
+    tools: ["Nuke", "IBK Colour", "Light Wrap", "Depth Grade"],
+    beforeImage: "/breakdowns/Green_Before.png",
+    afterImage: "/breakdowns/Green_After.png",
     beforeLabel: {
       en: "RAW GREEN SCREEN PLATE",
       pt: "PLATE BRUTO GREEN SCREEN",
@@ -207,8 +207,8 @@ export const BREAKDOWN_COMPARISONS: Record<"greenscreen" | "cleanup", BreakdownP
       pt: "COMPOSIÇÃO FINAL (NUKE)",
     },
     description: {
-      en: "Fine hair spill suppression, physical edge light reconstruction matching the background digital matte painting, and atmospheric volumetric depth grading.",
-      pt: "Supressão fina de spill de cabelo, reconstrução física de luz de borda integrada ao matte painting 3D e gradação volumétrica de atmosfera.",
+      en: "Sub-pixel hair key extraction, realistic edge illumination reconstruction matching background plate, and photometric color grading.",
+      pt: "Extração sub-pixel de fios de cabelo, reconstrução de luz de borda integrada e gradação fotométrica de cor.",
     },
   },
   cleanup: {
@@ -217,10 +217,10 @@ export const BREAKDOWN_COMPARISONS: Record<"greenscreen" | "cleanup", BreakdownP
       en: "Complex Rig, Wire & Marker Removal",
       pt: "Clean-up Complexo, Remoção de Cabos & Marcadores",
     },
-    project: "Commercial High-Speed Plate",
-    tools: ["Nuke Paint", "Mocha Pro Planar", "Frame-by-Frame Patch", "Film Grain Match"],
-    beforeImage: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1600&auto=format&fit=crop",
-    afterImage: "https://images.unsplash.com/photo-1514565131-fce0801e5785?q=80&w=1600&auto=format&fit=crop",
+    project: "Commercial Live Plate",
+    tools: ["Nuke Paint", "Mocha Pro", "Clean Patch", "Grain Match"],
+    beforeImage: "/breakdowns/Clean_Before.png",
+    afterImage: "/breakdowns/Clean_After.png",
     beforeLabel: {
       en: "PLATE WITH RIGS & MARKERS",
       pt: "PLATE COM CABOS & MARCADORES",
@@ -230,8 +230,8 @@ export const BREAKDOWN_COMPARISONS: Record<"greenscreen" | "cleanup", BreakdownP
       pt: "CLEAN PLATE FINAL INVISÍVEL",
     },
     description: {
-      en: "Invisible rig removal, camera tracking marker replacement, motion blur reconstruction, and authentic 35mm film grain preservation across moving camera shots.",
-      pt: "Remoção invisível de cabos e equipamentos, reconstituição de texturas e motion blur, e preservação procedural do grão original de película 35mm.",
+      en: "Invisible rig removal, tracking marker reconstruction, optical motion blur matching, and authentic film grain synthesis.",
+      pt: "Remoção invisível de equipamentos e cabos, reconstrução de texturas, motion blur e síntese procedural de granulação.",
     },
   },
 };
