@@ -15,22 +15,15 @@ export function Hero() {
 
   return (
     <section id="hero" className="relative min-h-[95vh] pt-32 pb-24 flex flex-col justify-center items-center px-4 sm:px-6 overflow-hidden">
-      {/* Background Ambient Cinematic Video Loop */}
+      {/* Background Ambient Media Loop (Exact original media from Wix site) */}
       <div className="absolute inset-0 pointer-events-none -z-20 overflow-hidden">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-full h-full object-cover filter brightness-[0.22] contrast-125 saturate-50 scale-105"
-        >
-          <source
-            src="https://assets.mixkit.co/videos/preview/mixkit-futuristic-robotic-arm-working-in-a-lab-43405-large.mp4"
-            type="video/mp4"
-          />
-        </video>
+        <img
+          src="https://static.wixstatic.com/media/8b4d3c_6a7ba1e0b5c64d5b84bcf7b707e78c46~mv2.gif"
+          alt="Wesley VFX Background"
+          className="w-full h-full object-cover filter brightness-[0.25] contrast-125 saturate-50 scale-105"
+        />
         {/* Cinematic dark gradients on top/bottom */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-[#080808]/70 to-[#080808]/90" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-[#080808]/75 to-[#080808]/90" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#080808_85%)]" />
       </div>
 

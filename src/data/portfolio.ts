@@ -235,66 +235,78 @@ export const BREAKDOWN_COMPARISONS: Record<"greenscreen" | "cleanup", BreakdownP
   },
 };
 
-// Studio Reliability & Infrastructure Specs
+// Studio Reliability & Infrastructure Specs (6 items for a balanced 3x2 grid)
 export const STUDIO_INFRASTRUCTURE: StudioFeature[] = [
   {
     code: "01",
     title: {
-      en: "Dual Workstation Redundancy",
-      pt: "Redundância de Estações de Trabalho",
+      en: "Dual Workstations",
+      pt: "Duas Máquinas Espelhadas",
     },
     highlight: "ZERO HARDWARE DOWNTIME",
     desc: {
-      en: "Two mirror-configured high-performance workstations with real-time project sync. If a hardware failure ever occurs, work resumes instantly on the secondary machine with zero delay.",
-      pt: "Duas máquinas de alta performance espelhadas com sincronização em tempo real. Se um computador apresentar qualquer falha, o projeto continua na máquina de backup sem atrasos.",
+      en: "If a computer ever fails, the secondary backup workstation takes over in seconds. Zero delays.",
+      pt: "Caiu o computador? A máquina de backup assume no segundo seguinte. Zero atraso na entrega.",
     },
   },
   {
     code: "02",
     title: {
-      en: "1 Gbps Symmetric Fiber + 5G Fallback",
-      pt: "Internet 1 Gbps Simétrica + Contingência 5G",
+      en: "1 Gbps Fiber + 5G Fallback",
+      pt: "Internet 1 Gbps + Backup 5G",
     },
-    highlight: "1000 MBPS UP/DOWN",
+    highlight: "ALWAYS CONNECTED",
     desc: {
-      en: "Dedicated 1 Gbps fiber for instant transfers of heavy 4K/6K EXR, DPX, and RED RAW frame sequences. Automated 5G cellular failover guarantees you never hear 'the internet went down'.",
-      pt: "Fibra dedicada de 1 Gbps para transferências ultra-rápidas de sequências pesadas de EXR, DPX e RAW. Roteador com failover 5G automático: conexão garantida 24/7.",
+      en: "Instant 4K/6K EXR transfers. Automatic 5G failover means you never hear 'the internet dropped'.",
+      pt: "Zero desculpas de 'caiu a internet'. 1000 Mb/s dedicados com contingência móvel automática.",
     },
   },
   {
     code: "03",
     title: {
-      en: "High-Speed Local 10GbE NAS Storage",
-      pt: "Armazenamento NAS 10GbE com Redundância RAID",
+      en: "Local 10GbE NAS RAID",
+      pt: "Storage NAS 10GbE em RAID",
     },
-    highlight: "MULTI-TERABYTE NVMe/RAID",
+    highlight: "FAST & REDUNDANT",
     desc: {
-      en: "High-capacity network-attached storage on 10GbE local network. Full multi-disk redundancy ensures large project caches, assets, and delivery versions are safe from drive loss.",
-      pt: "Servidor NAS local em rede 10GbE com arranjo RAID redundante. Armazenamento massivo e seguro para caches pesados de simulação e versões finais de entrega.",
+      en: "Multi-terabyte high-speed network storage. Heavy caches and master files protected against disk loss.",
+      pt: "Armazenamento massivo em rede de alta velocidade com redundância total para seus arquivos e renders.",
     },
   },
   {
     code: "04",
     title: {
-      en: "Commercial The Foundry NukeX License",
-      pt: "Licença Comercial The Foundry NukeX",
+      en: "Official NukeX Commercial License",
+      pt: "Licença Comercial NukeX",
     },
-    highlight: "LEGAL & STUDIO COMPLIANT",
+    highlight: "100% LEGAL & COMPLIANT",
     desc: {
-      en: "Official, fully legitimate commercial NukeX and production tool licenses. Full technical support, official updates, and complete compliance for strict studio security audits.",
-      pt: "Licenciamento comercial oficial e legítimo do NukeX e ferramentas de produção. Conformidade total para auditorias de segurança de estúdios internacionais e produtoras.",
+      en: "Fully compliant commercial The Foundry license. Approved for strict studio and security audits.",
+      pt: "Software 100% legalizado pela The Foundry. Total conformidade com auditorias de grandes estúdios.",
     },
   },
   {
     code: "05",
     title: {
-      en: "UPS / No-Break Power Protection",
-      pt: "Proteção Elétrica com Nobreak (UPS)",
+      en: "UPS Battery Protection",
+      pt: "Nobreak Senoidal (UPS)",
     },
-    highlight: "CONTINUOUS POWER BACKUP",
+    highlight: "CONTINUOUS POWER",
     desc: {
-      en: "Enterprise battery backup system protecting machines and storage. Renders and live scripts never corrupt or halt from grid fluctuations or blackouts.",
-      pt: "Sistema de nobreak senoidal protegendo máquinas e armazenamento. Renders e comp scripts nunca são interrompidos ou corrompidos por oscilações na rede elétrica.",
+      en: "Power outages won't stop the pipeline. Renders and comp scripts remain safe and running.",
+      pt: "Caiu a energia do bairro? O nobreak mantém máquinas e renders rodando sem corromper arquivos.",
+    },
+  },
+  {
+    code: "06",
+    title: {
+      en: "Color Management (ACES / OCIO)",
+      pt: "Pipeline de Cor (ACES / OCIO)",
+    },
+    highlight: "CINEMATIC FIDELITY",
+    desc: {
+      en: "Industry-standard color pipelines ensuring pinpoint consistency from camera RAW to final delivery.",
+      pt: "Fidelidade absoluta de cor em padrão de cinema, garantindo consistência do RAW ao master final.",
     },
   },
 ];
