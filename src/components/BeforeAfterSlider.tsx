@@ -1,19 +1,18 @@
 "use client";
 
 import React, { useState, useRef, useCallback } from "react";
-import { BreakdownPair } from "@/data/portfolio";
+import { BREAKDOWN_COMPARISONS } from "@/data/portfolio";
 import { useLanguage } from "@/context/LanguageContext";
-import { SlidersHorizontal, Layers, CheckCircle2 } from "lucide-react";
+import { SlidersHorizontal, Layers, CheckCircle2, Sparkles, Wand2 } from "lucide-react";
 
-interface BeforeAfterSliderProps {
-  item: BreakdownPair;
-}
-
-export function BeforeAfterSlider({ item }: BeforeAfterSliderProps) {
+export function BeforeAfterSlider() {
+  const [activeTab, setActiveTab] = useState<"greenscreen" | "cleanup">("greenscreen");
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const { lang, t } = useLanguage();
+
+  const item = BREAKDOWN_COMPARISONS[activeTab];
 
   const handleMove = useCallback((clientX: number) => {
     if (!containerRef.current) return;
@@ -35,30 +34,51 @@ export function BeforeAfterSlider({ item }: BeforeAfterSliderProps) {
 
   return (
     <div className="w-full bg-neutral-950/80 border border-neutral-800/80 rounded-2xl overflow-hidden p-5 sm:p-8 backdrop-blur-sm shadow-2xl">
-      {/* Header Info */}
+      {/* Header Info & Switcher Buttons */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-5 border-b border-neutral-850">
         <div>
           <div className="flex items-center gap-2 mb-1.5">
             <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-emerald-400 bg-emerald-950/60 border border-emerald-800/60 px-2.5 py-0.5 rounded">
               INTERACTIVE WIPE
             </span>
-            <span className="text-xs font-mono text-neutral-400">{t("breakdown.itemProject")}</span>
+            <span className="text-xs font-mono text-neutral-400">{item.project}</span>
           </div>
           <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-            {t("breakdown.itemTitle")}
+            {item.title[lang]}
           </h3>
         </div>
 
-        {/* Tools Badges */}
-        <div className="flex flex-wrap items-center gap-1.5">
-          {item.tools.map((tool) => (
-            <span
-              key={tool}
-              className="text-[11px] font-mono text-neutral-300 bg-neutral-900 border border-neutral-800 px-3 py-1 rounded-md"
-            >
-              {tool}
-            </span>
-          ))}
+        {/* Buttons replacing tags: Green Screen vs Cleanup */}
+        <div className="flex items-center gap-2 p-1 rounded-xl bg-neutral-900 border border-neutral-800 self-start sm:self-auto">
+          <button
+            onClick={() => {
+              setActiveTab("greenscreen");
+              setSliderPosition(50);
+            }}
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-mono tracking-wider transition-all uppercase ${
+              activeTab === "greenscreen"
+                ? "bg-emerald-950/70 text-emerald-300 border border-emerald-700/80 font-bold shadow-lg"
+                : "text-neutral-400 hover:text-white"
+            }`}
+          >
+            <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+            <span>GREEN SCREEN</span>
+          </button>
+
+          <button
+            onClick={() => {
+              setActiveTab("cleanup");
+              setSliderPosition(50);
+            }}
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-mono tracking-wider transition-all uppercase ${
+              activeTab === "cleanup"
+                ? "bg-amber-950/70 text-amber-300 border border-amber-700/80 font-bold shadow-lg"
+                : "text-neutral-400 hover:text-white"
+            }`}
+          >
+            <Wand2 className="w-3.5 h-3.5 text-amber-400" />
+            <span>CLEANUP</span>
+          </button>
         </div>
       </div>
 
@@ -77,12 +97,12 @@ export function BeforeAfterSlider({ item }: BeforeAfterSliderProps) {
         <div className="absolute inset-0 w-full h-full pointer-events-none">
           <img
             src={item.afterImage}
-            alt={t("breakdown.finalLabel")}
+            alt={item.afterLabel[lang]}
             className="w-full h-full object-cover"
           />
           <div className="absolute top-4 right-4 z-10 flex items-center gap-1.5 bg-black/80 backdrop-blur-md border border-neutral-700/80 px-3 py-1.5 rounded-full text-[11px] font-mono text-emerald-400 font-medium">
             <CheckCircle2 className="w-3.5 h-3.5" />
-            {t("breakdown.finalLabel")}
+            {item.afterLabel[lang]}
           </div>
         </div>
 
@@ -93,12 +113,12 @@ export function BeforeAfterSlider({ item }: BeforeAfterSliderProps) {
         >
           <img
             src={item.beforeImage}
-            alt={t("breakdown.rawLabel")}
+            alt={item.beforeLabel[lang]}
             className="w-full h-full object-cover filter contrast-90 brightness-95"
           />
           <div className="absolute top-4 left-4 z-10 flex items-center gap-1.5 bg-black/80 backdrop-blur-md border border-neutral-700/80 px-3 py-1.5 rounded-full text-[11px] font-mono text-amber-400 font-medium">
             <Layers className="w-3.5 h-3.5" />
-            {t("breakdown.rawLabel")}
+            {item.beforeLabel[lang]}
           </div>
         </div>
 

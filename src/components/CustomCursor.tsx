@@ -8,6 +8,7 @@ export function CustomCursor() {
   
   const mousePos = useRef({ x: -100, y: -100 });
   const ringPos = useRef({ x: -100, y: -100 });
+  const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -20,6 +21,11 @@ export function CustomCursor() {
     const onMouseMove = (e: MouseEvent) => {
       mousePos.current.x = e.clientX;
       mousePos.current.y = e.clientY;
+
+      // 1:1 Instant follow for the sharp center dot
+      if (dotRef.current) {
+        dotRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
+      }
 
       const target = e.target as HTMLElement | null;
       if (!target) return;
@@ -37,11 +43,10 @@ export function CustomCursor() {
 
     window.addEventListener("mousemove", onMouseMove);
 
-    // Smooth lerp trailing animation
+    // Smooth lerp loop for the outer ring (like aue.productions)
     let animationId: number;
     const animate = () => {
-      // Lerp smoothing factor
-      const lerp = 0.22;
+      const lerp = 0.2;
       ringPos.current.x += (mousePos.current.x - ringPos.current.x) * lerp;
       ringPos.current.y += (mousePos.current.y - ringPos.current.y) * lerp;
 
@@ -63,22 +68,28 @@ export function CustomCursor() {
   if (!enabled) return null;
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-[9999] overflow-hidden select-none">
-      {/* Trailing soft badge / ring */}
+    <div className="pointer-events-none fixed inset-0 z-[99999] overflow-hidden select-none mix-blend-difference">
+      {/* Center solid dot - follows 1:1 with ZERO lag */}
+      <div
+        ref={dotRef}
+        className="fixed top-0 left-0 -ml-[2.5px] -mt-[2.5px] w-[5px] h-[5px] rounded-full bg-white pointer-events-none"
+      />
+
+      {/* Outer ring - smoothly trails with spring/lerp (exact matching user screenshot) */}
       <div
         ref={ringRef}
         className={`fixed top-0 left-0 pointer-events-none flex items-center justify-center font-mono font-bold tracking-widest transition-all duration-200 ease-out ${
           cursorState === "play"
-            ? "-ml-9 -mt-9 w-18 h-18 rounded-full bg-white text-black text-[11px] shadow-2xl scale-100"
+            ? "-ml-9 -mt-9 w-18 h-18 rounded-full border border-white bg-white/20 text-white text-[10px] scale-100"
             : cursorState === "drag"
-            ? "-ml-9 -mt-5 w-18 h-10 rounded-full bg-white text-black text-[10px] shadow-2xl scale-100"
+            ? "-ml-9 -mt-5 w-18 h-10 rounded-full border border-white bg-white/20 text-white text-[9px] scale-100"
             : cursorState === "hover"
-            ? "-ml-5 -mt-5 w-10 h-10 rounded-full border border-white/60 bg-white/5 backdrop-blur-[0.5px] scale-110"
-            : "-ml-3 -mt-3 w-6 h-6 rounded-full border border-white/30 scale-90"
+            ? "-ml-5 -mt-5 w-10 h-10 rounded-full border border-white/80 scale-110"
+            : "-ml-[14px] -mt-[14px] w-7 h-7 rounded-full border border-white/70 scale-100"
         }`}
       >
-        {cursorState === "play" && <span>PLAY</span>}
-        {cursorState === "drag" && <span>DRAG</span>}
+        {cursorState === "play" && <span className="text-white">PLAY</span>}
+        {cursorState === "drag" && <span className="text-white">DRAG</span>}
       </div>
     </div>
   );

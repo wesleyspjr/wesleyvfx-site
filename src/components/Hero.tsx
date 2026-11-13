@@ -88,15 +88,15 @@ export function Hero() {
             onClick={() => setModalOpen(true)}
             className="group relative w-full aspect-[16/9] rounded-2xl overflow-hidden border border-neutral-800/90 bg-neutral-950 cursor-pointer shadow-2xl transition-all duration-500 hover:border-neutral-700"
           >
-            {/* Thumbnail Poster */}
+            {/* Thumbnail Poster (Official YouTube / Vimeo thumbs) */}
             <img
               src={
                 activeReelKey === "compositing"
-                  ? "https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1600&auto=format&fit=crop"
-                  : "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1600&auto=format&fit=crop"
+                  ? "https://img.youtube.com/vi/YTH5TMSUSeM/maxresdefault.jpg"
+                  : "https://i.vimeocdn.com/video/1876140406-8a566583eb2c60e1c7a84e5b63aaa9168e645b641194414537dcccc83c1e1b85-d_1280x720"
               }
               alt={activeReel.title}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter brightness-85 contrast-105"
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter brightness-90 contrast-105"
             />
 
             {/* Gradient Mask */}

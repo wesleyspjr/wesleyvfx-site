@@ -6,7 +6,7 @@ import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { BrandStrip } from "@/components/BrandStrip";
 import { SelectedProjects } from "@/components/SelectedProjects";
-import { WorkflowSpecs } from "@/components/WorkflowSpecs";
+import { StudioSpecs } from "@/components/StudioSpecs";
 import { ContactSection } from "@/components/ContactSection";
 import { Footer } from "@/components/Footer";
 
@@ -19,7 +19,7 @@ export default function Home() {
         <Hero />
         <BrandStrip />
         <SelectedProjects />
-        <WorkflowSpecs />
+        <StudioSpecs />
         <ContactSection />
         <Footer />
       </main>

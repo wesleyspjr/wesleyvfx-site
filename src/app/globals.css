@@ -11,8 +11,13 @@
     color: var(--foreground);
     font-family: var(--font-geist-sans), system-ui, sans-serif;
     overflow-x: hidden;
-    selection-background-color: #ffffff;
-    selection-color: #000000;
+  }
+}
+
+/* Hide native cursor on desktop so the custom dot+ring cursor takes over */
+@media (pointer: fine) and (hover: hover) {
+  html, body, a, button, input, [role="button"] {
+    cursor: none !important;
   }
 }
 
