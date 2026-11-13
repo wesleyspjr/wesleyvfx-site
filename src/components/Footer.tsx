@@ -14,7 +14,7 @@ export function Footer() {
       const now = new Date();
       setCurrentYear(now.getFullYear());
       setTimeSP(
-        now.toLocaleTimeString("pt-BR", {
+        now.toLocaleTimeString("en-US", {
           timeZone: "America/Sao_Paulo",
           hour12: false,
         })
@@ -36,23 +36,23 @@ export function Footer() {
   };
 
   return (
-    <footer className="w-full border-t border-neutral-900 bg-neutral-950 pt-16 pb-12 text-neutral-400">
+    <footer className="w-full border-t border-neutral-900 bg-neutral-950 pt-20 pb-14 text-neutral-400">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 pb-12 border-b border-neutral-900">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 pb-14 border-b border-neutral-900">
           <div>
             <div className="flex items-center gap-2 mb-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="font-mono text-sm uppercase tracking-widest text-white font-semibold">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="font-mono text-sm uppercase tracking-[0.2em] text-white font-bold">
                 WESLEY JUNIOR
               </span>
             </div>
-            <p className="text-xs font-mono text-neutral-500">
-              VFX COMPOSITOR & MOTION DESIGNER · JUNDIAÍ, SP
+            <p className="text-xs font-mono text-neutral-500 tracking-wider">
+              VISUAL EFFECTS COMPOSITOR & MOTION DESIGNER · BRAZIL / WORLDWIDE
             </p>
           </div>
 
           {/* Social Links */}
-          <div className="flex flex-wrap items-center gap-4 text-xs font-mono tracking-wider">
+          <div className="flex flex-wrap items-center gap-5 text-xs font-mono tracking-widest">
             {PROFILE.contacts.socials.map((s) => (
               <a
                 key={s.name}
@@ -69,7 +69,7 @@ export function Footer() {
               href={PROFILE.contacts.resumePdf}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-emerald-400 hover:text-emerald-300 transition-colors"
+              className="text-white hover:text-neutral-300 transition-colors"
             >
               RESUME (PDF)
             </a>
@@ -78,7 +78,7 @@ export function Footer() {
           {/* Back to top */}
           <button
             onClick={scrollToTop}
-            className="flex items-center gap-1.5 text-xs font-mono text-neutral-400 hover:text-white transition-colors p-2 rounded-lg bg-neutral-900 border border-neutral-800"
+            className="flex items-center gap-2 text-xs font-mono text-neutral-400 hover:text-white transition-colors px-3 py-2 rounded-lg bg-neutral-900 border border-neutral-800"
           >
             <span>TOP</span>
             <ArrowUp className="w-3.5 h-3.5" />
@@ -99,7 +99,7 @@ export function Footer() {
           </div>
 
           <div>
-            © {currentYear} Wesley Junior. Todos os direitos reservados.
+            © {currentYear} Wesley Junior. All rights reserved.
           </div>
         </div>
       </div>
