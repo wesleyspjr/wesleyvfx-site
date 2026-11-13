@@ -5,71 +5,48 @@ import React, { useEffect, useState, useRef } from "react";
 export function CustomCursor() {
   const [enabled, setEnabled] = useState(false);
   const [cursorState, setCursorState] = useState<"default" | "hover" | "play" | "drag">("default");
-  const [cursorText, setCursorText] = useState("");
   
-  const posRef = useRef({ x: -100, y: -100 });
-  const trailRef = useRef({ x: -100, y: -100, vx: 0, vy: 0 });
-  const dotRef = useRef<HTMLDivElement>(null);
+  const mousePos = useRef({ x: -100, y: -100 });
+  const ringPos = useRef({ x: -100, y: -100 });
   const ringRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Only enable on desktop with fine pointer
-    if (window.matchMedia("(pointer: fine) and (hover: hover)").matches) {
-      setEnabled(true);
-    } else {
+    // Only enable on desktop with fine mouse pointer
+    if (!window.matchMedia("(pointer: fine) and (hover: hover)").matches) {
       return;
     }
+    setEnabled(true);
 
     const onMouseMove = (e: MouseEvent) => {
-      posRef.current.x = e.clientX;
-      posRef.current.y = e.clientY;
+      mousePos.current.x = e.clientX;
+      mousePos.current.y = e.clientY;
 
-      if (dotRef.current) {
-        dotRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
-      }
-
-      // Check hovered element
       const target = e.target as HTMLElement | null;
       if (!target) return;
 
-      const playEl = target.closest('[data-cursor="play"]');
-      const dragEl = target.closest('[data-cursor="drag"]');
-      const interactiveEl = target.closest('a, button, input, [role="button"]');
-
-      if (playEl) {
+      if (target.closest('[data-cursor="play"]')) {
         setCursorState("play");
-        setCursorText("PLAY");
-      } else if (dragEl) {
+      } else if (target.closest('[data-cursor="drag"]')) {
         setCursorState("drag");
-        setCursorText("DRAG");
-      } else if (interactiveEl) {
+      } else if (target.closest('a, button, input, [role="button"]')) {
         setCursorState("hover");
-        setCursorText("");
       } else {
         setCursorState("default");
-        setCursorText("");
       }
     };
 
     window.addEventListener("mousemove", onMouseMove);
 
-    // Smooth spring/lerp loop for trailing ring
+    // Smooth lerp trailing animation
     let animationId: number;
     const animate = () => {
-      const spring = 0.18;
-      const friction = 0.72;
-
-      const dx = posRef.current.x - trailRef.current.x;
-      const dy = posRef.current.y - trailRef.current.y;
-
-      trailRef.current.vx = (trailRef.current.vx + dx * spring) * friction;
-      trailRef.current.vy = (trailRef.current.vy + dy * spring) * friction;
-
-      trailRef.current.x += trailRef.current.vx;
-      trailRef.current.y += trailRef.current.vy;
+      // Lerp smoothing factor
+      const lerp = 0.22;
+      ringPos.current.x += (mousePos.current.x - ringPos.current.x) * lerp;
+      ringPos.current.y += (mousePos.current.y - ringPos.current.y) * lerp;
 
       if (ringRef.current) {
-        ringRef.current.style.transform = `translate3d(${trailRef.current.x}px, ${trailRef.current.y}px, 0)`;
+        ringRef.current.style.transform = `translate3d(${ringPos.current.x}px, ${ringPos.current.y}px, 0)`;
       }
 
       animationId = requestAnimationFrame(animate);
@@ -86,29 +63,22 @@ export function CustomCursor() {
   if (!enabled) return null;
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-[9999] overflow-hidden transition-opacity duration-300">
-      {/* Center sharp dot */}
-      <div
-        ref={dotRef}
-        className={`fixed top-0 left-0 -ml-1 -mt-1 w-2 h-2 rounded-full bg-white transition-opacity duration-200 ${
-          cursorState === "play" || cursorState === "drag" ? "opacity-0" : "opacity-100"
-        }`}
-      />
-
-      {/* Trailing smooth ring / pill */}
+    <div className="pointer-events-none fixed inset-0 z-[9999] overflow-hidden select-none">
+      {/* Trailing soft badge / ring */}
       <div
         ref={ringRef}
-        className={`fixed top-0 left-0 flex items-center justify-center font-mono font-bold tracking-widest text-black transition-all duration-300 ease-out ${
+        className={`fixed top-0 left-0 pointer-events-none flex items-center justify-center font-mono font-bold tracking-widest transition-all duration-200 ease-out ${
           cursorState === "play"
-            ? "-ml-9 -mt-9 w-20 h-20 rounded-full bg-white text-xs shadow-2xl scale-100"
+            ? "-ml-9 -mt-9 w-18 h-18 rounded-full bg-white text-black text-[11px] shadow-2xl scale-100"
             : cursorState === "drag"
-            ? "-ml-8 -mt-5 w-16 h-10 rounded-full bg-white text-[10px] shadow-2xl scale-100"
+            ? "-ml-9 -mt-5 w-18 h-10 rounded-full bg-white text-black text-[10px] shadow-2xl scale-100"
             : cursorState === "hover"
-            ? "-ml-5 -mt-5 w-10 h-10 rounded-full border border-white/60 bg-white/10 backdrop-blur-[1px] scale-110"
-            : "-ml-3.5 -mt-3.5 w-7 h-7 rounded-full border border-white/30 scale-90"
+            ? "-ml-5 -mt-5 w-10 h-10 rounded-full border border-white/60 bg-white/5 backdrop-blur-[0.5px] scale-110"
+            : "-ml-3 -mt-3 w-6 h-6 rounded-full border border-white/30 scale-90"
         }`}
       >
-        {cursorText}
+        {cursorState === "play" && <span>PLAY</span>}
+        {cursorState === "drag" && <span>DRAG</span>}
       </div>
     </div>
   );

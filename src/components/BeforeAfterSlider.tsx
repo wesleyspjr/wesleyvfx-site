@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useCallback } from "react";
 import { BreakdownPair } from "@/data/portfolio";
+import { useLanguage } from "@/context/LanguageContext";
 import { SlidersHorizontal, Layers, CheckCircle2 } from "lucide-react";
 
 interface BeforeAfterSliderProps {
@@ -12,6 +13,7 @@ export function BeforeAfterSlider({ item }: BeforeAfterSliderProps) {
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const { lang, t } = useLanguage();
 
   const handleMove = useCallback((clientX: number) => {
     if (!containerRef.current) return;
@@ -40,10 +42,10 @@ export function BeforeAfterSlider({ item }: BeforeAfterSliderProps) {
             <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-emerald-400 bg-emerald-950/60 border border-emerald-800/60 px-2.5 py-0.5 rounded">
               INTERACTIVE WIPE
             </span>
-            <span className="text-xs font-mono text-neutral-400">{item.project}</span>
+            <span className="text-xs font-mono text-neutral-400">{t("breakdown.itemProject")}</span>
           </div>
           <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-            {item.title}
+            {t("breakdown.itemTitle")}
           </h3>
         </div>
 
@@ -69,18 +71,18 @@ export function BeforeAfterSlider({ item }: BeforeAfterSliderProps) {
         onMouseLeave={() => setIsDragging(false)}
         onMouseMove={handleMouseMove}
         onTouchMove={handleTouchMove}
-        className="relative w-full aspect-[16/9] sm:aspect-[21/9] rounded-xl overflow-hidden select-none border border-neutral-800 group shadow-2xl"
+        className="relative w-full aspect-[16/9] sm:aspect-[21/9] rounded-xl overflow-hidden select-none border border-neutral-800 group shadow-2xl cursor-ew-resize"
       >
         {/* Layer 2: Final Comp (Right / Underneath) */}
         <div className="absolute inset-0 w-full h-full pointer-events-none">
           <img
             src={item.afterImage}
-            alt={item.afterLabel}
+            alt={t("breakdown.finalLabel")}
             className="w-full h-full object-cover"
           />
           <div className="absolute top-4 right-4 z-10 flex items-center gap-1.5 bg-black/80 backdrop-blur-md border border-neutral-700/80 px-3 py-1.5 rounded-full text-[11px] font-mono text-emerald-400 font-medium">
             <CheckCircle2 className="w-3.5 h-3.5" />
-            {item.afterLabel}
+            {t("breakdown.finalLabel")}
           </div>
         </div>
 
@@ -91,12 +93,12 @@ export function BeforeAfterSlider({ item }: BeforeAfterSliderProps) {
         >
           <img
             src={item.beforeImage}
-            alt={item.beforeLabel}
+            alt={t("breakdown.rawLabel")}
             className="w-full h-full object-cover filter contrast-90 brightness-95"
           />
           <div className="absolute top-4 left-4 z-10 flex items-center gap-1.5 bg-black/80 backdrop-blur-md border border-neutral-700/80 px-3 py-1.5 rounded-full text-[11px] font-mono text-amber-400 font-medium">
             <Layers className="w-3.5 h-3.5" />
-            {item.beforeLabel}
+            {t("breakdown.rawLabel")}
           </div>
         </div>
 
@@ -114,14 +116,14 @@ export function BeforeAfterSlider({ item }: BeforeAfterSliderProps) {
         {/* Instruction overlay on bottom */}
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 pointer-events-none">
           <span className="bg-black/70 backdrop-blur-md border border-neutral-800 text-[10px] font-mono text-neutral-400 px-3.5 py-1 rounded-full uppercase tracking-[0.2em]">
-            ← DRAG TO COMPARE →
+            {t("breakdown.dragInstruction")}
           </span>
         </div>
       </div>
 
       {/* Description caption */}
       <p className="mt-5 text-xs sm:text-sm text-neutral-400 font-sans leading-relaxed">
-        {item.description}
+        {item.description[lang]}
       </p>
     </div>
   );

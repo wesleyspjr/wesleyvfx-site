@@ -5,12 +5,14 @@ export interface Project {
   category: "VFX Compositing" | "Motion Design" | "Commercial" | "3D & Cleanup";
   year: string;
   tools: string[];
-  description: string;
+  description: {
+    en: string;
+    pt: string;
+  };
   thumbnail: string;
-  videoUrl?: string;
+  videoPreview: string; // Video loop for autoplay
   youtubeId?: string;
-  aspectRatio?: "16/9" | "9/16" | "4/5";
-  featured?: boolean;
+  vimeoId?: string;
 }
 
 export interface BreakdownPair {
@@ -22,7 +24,10 @@ export interface BreakdownPair {
   afterImage: string;
   beforeLabel: string;
   afterLabel: string;
-  description: string;
+  description: {
+    en: string;
+    pt: string;
+  };
 }
 
 export const PROFILE = {
@@ -30,30 +35,14 @@ export const PROFILE = {
   tagline: "VFX Compositor & Motion Designer",
   location: "Brazil · Working Worldwide",
   available: true,
-  statusText: "Available for selected projects",
-  bio: "Visual Effects Compositor and Motion Designer with 5+ years crafting high-end visuals for Hollywood productions, streaming giants, and global commercial campaigns. Specialized in node-based compositing (The Foundry Nuke) and dynamic motion design (Adobe After Effects) with an obsession for physical photorealism, invisible seamless cleanup, and kinetic pacing.",
-  brands: [
-    { name: "Netflix", label: "Feature Film & Streaming" },
-    { name: "Santander", label: "Commercial Campaigns" },
-    { name: "Coca-Cola", label: "Global Advertising" },
-    { name: "Disney", label: "Gaming & Franchise Promo" },
-    { name: "Hyundai", label: "Automotive VFX" },
-    { name: "Xiaomi", label: "Tech & Motion Identity" },
-    { name: "Dell", label: "B2B & Product" },
-    { name: "Audible", label: "Commercial Campaign" },
-  ],
   contacts: {
     intl: {
       email: "home@wesleyvfx.com.br",
-      label: "International & Remote Bookings",
-      desc: "For studios, remote commercial contracts, and international feature work (USD / EUR / Wire).",
     },
     br: {
       email: "contato@wesleyvfx.com.br",
       phone: "+55 11 94249-2876",
       whatsappUrl: "https://wa.me/5511942492876?text=Hi%20Wesley,%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20discuss%20a%20project.",
-      label: "National & Local Agencies",
-      desc: "Production companies and direct brands within Brazil (BRL / Direct Invoice).",
     },
     socials: [
       { name: "LinkedIn", url: "https://www.linkedin.com/in/wesleyspjr/", handle: "wesleyspjr" },
@@ -68,7 +57,8 @@ export const PROFILE = {
       id: "compositing",
       title: "Compositing Reel",
       year: "2025/2026",
-      youtubeId: "V9G5eT3HVMc",
+      youtubeId: "YTH5TMSUSeM",
+      vimeoId: undefined as string | undefined,
       duration: "01:24",
       highlight: "Nuke Multi-pass · CGI Integration · Cleanups · 3D Tracking",
     },
@@ -76,13 +66,15 @@ export const PROFILE = {
       id: "motion",
       title: "Motion Design Reel",
       year: "2025/2026",
-      youtubeId: "Yy6fByUmPuE",
+      youtubeId: undefined as string | undefined,
+      vimeoId: "963383257",
       duration: "01:10",
       highlight: "After Effects · Kinetic Typography · Commercial Styleframes",
     },
   },
 };
 
+// 9 projects for the curated 3x3 grid with autoplay video loops
 export const PROJECTS: Project[] = [
   {
     id: "santander",
@@ -91,10 +83,13 @@ export const PROJECTS: Project[] = [
     category: "VFX Compositing",
     year: "2024",
     tools: ["Nuke", "After Effects", "Mocha Pro"],
-    description: "Realistic screen replacement, multi-planar tracking across complex camera movements, and seamless background environment cleanup.",
+    description: {
+      en: "Realistic screen replacement, multi-planar tracking across complex camera movements, and seamless background environment cleanup.",
+      pt: "Substituição realista de telas, tracking multi-planar em movimentos complexos de câmera e limpeza invisível de cenário.",
+    },
     thumbnail: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1200&auto=format&fit=crop",
-    youtubeId: "V9G5eT3HVMc",
-    featured: true,
+    videoPreview: "https://assets.mixkit.co/videos/preview/mixkit-futuristic-robotic-arm-working-in-a-lab-43405-large.mp4",
+    youtubeId: "YTH5TMSUSeM",
   },
   {
     id: "coca-cola",
@@ -103,10 +98,13 @@ export const PROJECTS: Project[] = [
     category: "Commercial",
     year: "2024",
     tools: ["After Effects", "Color Grading", "Particle FX"],
-    description: "Atmospheric particle compositing, cinematic snow pass integration, and photometric lighting matching.",
+    description: {
+      en: "Atmospheric particle compositing, cinematic snow pass integration, and photometric lighting matching.",
+      pt: "Composição de partículas atmosféricas, integração de camadas de neve e correspondência fotométrica de luz.",
+    },
     thumbnail: "https://images.unsplash.com/photo-1514565131-fce0801e5785?q=80&w=1200&auto=format&fit=crop",
-    youtubeId: "Yy6fByUmPuE",
-    featured: true,
+    videoPreview: "https://assets.mixkit.co/videos/preview/mixkit-sparkler-particles-bursting-in-the-dark-41712-large.mp4",
+    vimeoId: "963383257",
   },
   {
     id: "hyundai-breakdown",
@@ -115,20 +113,28 @@ export const PROJECTS: Project[] = [
     category: "VFX Compositing",
     year: "2024",
     tools: ["Nuke", "3D Camera Projection", "CGI Multi-pass"],
-    description: "Photorealistic 3D vehicle integration on high-speed live action plates, physical ground reflection matching, and ambient occlusion passes.",
+    description: {
+      en: "Photorealistic 3D vehicle integration on high-speed live action plates, physical ground reflection matching, and ambient occlusion passes.",
+      pt: "Integração 3D de veículo em plate em alta velocidade, reflexos físicos e passes de oclusão.",
+    },
     thumbnail: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop",
-    featured: true,
+    videoPreview: "https://assets.mixkit.co/videos/preview/mixkit-car-headlights-illuminating-a-dark-tunnel-42021-large.mp4",
+    youtubeId: "YTH5TMSUSeM",
   },
   {
     id: "disney-solitaire",
     title: "Play. Tap. Escape.",
-    client: "Disney Solitaire",
+    client: "Disney",
     category: "Motion Design",
     year: "2024",
     tools: ["After Effects", "Cinema 4D", "Sound Design Sync"],
-    description: "Dynamic promotional motion design for gaming launch, rhythmic cutting, and high-energy UI element animation.",
+    description: {
+      en: "Dynamic promotional motion design for gaming launch, rhythmic cutting, and high-energy UI element animation.",
+      pt: "Motion design promocional para lançamento de game, cortes rítmicos e animação de interface interativa.",
+    },
     thumbnail: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?q=80&w=1200&auto=format&fit=crop",
-    featured: true,
+    videoPreview: "https://assets.mixkit.co/videos/preview/mixkit-colorful-neon-lights-in-motion-42517-large.mp4",
+    vimeoId: "963383257",
   },
   {
     id: "loud-vinijr",
@@ -137,9 +143,13 @@ export const PROJECTS: Project[] = [
     category: "Motion Design",
     year: "2023",
     tools: ["After Effects", "Kinetic Typography", "Glitch & Halftone"],
-    description: "Edgy esports aesthetic, fast-paced kinetic typography, and audio-reactive glitch treatments for worldwide product drop.",
+    description: {
+      en: "Edgy esports aesthetic, fast-paced kinetic typography, and audio-reactive glitch treatments for worldwide product drop.",
+      pt: "Estética de e-sports, kinetic typography de alto impacto e sincronia com beat musical para anúncio global.",
+    },
     thumbnail: "https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=1200&auto=format&fit=crop",
-    featured: false,
+    videoPreview: "https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-screens-with-code-31911-large.mp4",
+    vimeoId: "963383257",
   },
   {
     id: "actionvfx-contest",
@@ -148,9 +158,58 @@ export const PROJECTS: Project[] = [
     category: "VFX Compositing",
     year: "2023",
     tools: ["Nuke", "Deep Compositing", "CG Explosions & Debris"],
-    description: "Complex action sequence featuring practical pyrotechnics blended with CG volumetric smoke, shrapnel, and lighting interaction.",
+    description: {
+      en: "Complex action sequence featuring practical pyrotechnics blended with CG volumetric smoke, shrapnel, and lighting interaction.",
+      pt: "Composição de cena de ação com múltiplos elementos pirotécnicos práticos, CG e fumaça volumétrica.",
+    },
     thumbnail: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?q=80&w=1200&auto=format&fit=crop",
-    featured: false,
+    videoPreview: "https://assets.mixkit.co/videos/preview/mixkit-burst-of-orange-sparks-in-the-dark-41711-large.mp4",
+    youtubeId: "YTH5TMSUSeM",
+  },
+  {
+    id: "netflix-feature",
+    title: "Feature Film Cleanup & Set Extension",
+    client: "Netflix",
+    category: "VFX Compositing",
+    year: "2023",
+    tools: ["Nuke", "3D Projection", "Clean Plate Paint"],
+    description: {
+      en: "Seamless digital set extension and marker cleanup on 6K RED RAW plates for international streaming production.",
+      pt: "Extensão digital de cenário e limpeza invisível de marcadores em plates 6K RED RAW para streaming internacional.",
+    },
+    thumbnail: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=1200&auto=format&fit=crop",
+    videoPreview: "https://assets.mixkit.co/videos/preview/mixkit-cinematic-night-view-of-a-metropolis-with-traffic-42045-large.mp4",
+    youtubeId: "YTH5TMSUSeM",
+  },
+  {
+    id: "xiaomi-launch",
+    title: "Product Kinetic Launch Film",
+    client: "Xiaomi",
+    category: "Commercial",
+    year: "2024",
+    tools: ["After Effects", "Cinema 4D", "Octane Render"],
+    description: {
+      en: "Photorealistic hardware styling, macro lens depth-of-field animation, and typographic kinetic transitions.",
+      pt: "Animação de hardware fotorrealista com profundidade de campo macro e transições tipográficas cinéticas.",
+    },
+    thumbnail: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1200&auto=format&fit=crop",
+    videoPreview: "https://assets.mixkit.co/videos/preview/mixkit-close-up-of-motherboard-with-flowing-electronic-data-42774-large.mp4",
+    vimeoId: "963383257",
+  },
+  {
+    id: "audible-pumpingpetals",
+    title: "Pumping Petals Promo Campaign",
+    client: "Audible",
+    category: "Motion Design",
+    year: "2023",
+    tools: ["After Effects", "Cell Animation Sync", "Color Grade"],
+    description: {
+      en: "Multi-layered dynamic broadcast graphics, character art integration, and vibrant palette mastery.",
+      pt: "Gráficos de transmissão dinâmicos em camadas, integração com animação tradicional e paleta vibrante.",
+    },
+    thumbnail: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=1200&auto=format&fit=crop",
+    videoPreview: "https://assets.mixkit.co/videos/preview/mixkit-fluid-colors-mixing-together-slowly-42525-large.mp4",
+    vimeoId: "963383257",
   },
 ];
 
@@ -164,33 +223,9 @@ export const BREAKDOWN_ITEMS: BreakdownPair[] = [
     afterImage: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1600&auto=format&fit=crop",
     beforeLabel: "RAW PLATE / GREEN SCREEN",
     afterLabel: "FINAL COMPOSITE (NUKE)",
-    description: "Fine hair key extraction, realistic edge light wrap reconstruction, 3D camera projection of digital matte painting, and atmospheric volumetric depth grading.",
-  },
-];
-
-export const WORKFLOW_SPECS = [
-  {
-    code: "01",
-    title: "Multi-pass CG Compositing",
-    engine: "The Foundry Nuke",
-    desc: "Physical reconstruction of beauty passes from Diffuse, Specular, Transmission, Z-Depth, and Cryptomatte isolation layers.",
-  },
-  {
-    code: "02",
-    title: "3D Camera Tracking & Matchmove",
-    engine: "Nuke CameraTracker / Mocha Pro",
-    desc: "Accurate focal solver, optical lens distortion/undistort pipelines, and 3D terrain reconstruction for pinpoint CG placement.",
-  },
-  {
-    code: "03",
-    title: "Advanced Clean-up & Rig Removal",
-    engine: "Mocha & Nuke Paint / AE",
-    desc: "Invisible wire removal, equipment cleanup, marker removal, and procedural restoration of authentic 35mm film grain structure.",
-  },
-  {
-    code: "04",
-    title: "Kinetic Motion & Design Systems",
-    engine: "Adobe After Effects",
-    desc: "Fine-tuned speed graphs, expressive kinetic typography, and editorial rhythm tailored for commercial broadcast and digital campaigns.",
+    description: {
+      en: "Fine hair key extraction, realistic edge light wrap reconstruction, 3D camera projection of digital matte painting, and atmospheric volumetric depth grading.",
+      pt: "Extração de key fina de cabelo, reconstrução física de iluminação de borda (light wrap), projeção de câmera 3D de matte painting e gradação atmosférica volumétrica.",
+    },
   },
 ];

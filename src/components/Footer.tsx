@@ -2,12 +2,14 @@
 
 import React, { useState, useEffect } from "react";
 import { PROFILE } from "@/data/portfolio";
+import { useLanguage } from "@/context/LanguageContext";
 import { ArrowUp, Terminal } from "lucide-react";
 
 export function Footer() {
   const [timeSP, setTimeSP] = useState<string>("");
   const [timeUTC, setTimeUTC] = useState<string>("");
   const [currentYear, setCurrentYear] = useState<number>(2026);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const updateTime = () => {
@@ -47,7 +49,7 @@ export function Footer() {
               </span>
             </div>
             <p className="text-xs font-mono text-neutral-500 tracking-wider">
-              VISUAL EFFECTS COMPOSITOR & MOTION DESIGNER · BRAZIL / WORLDWIDE
+              {t("footer.role")}
             </p>
           </div>
 
@@ -71,7 +73,7 @@ export function Footer() {
               rel="noopener noreferrer"
               className="text-white hover:text-neutral-300 transition-colors"
             >
-              RESUME (PDF)
+              {t("footer.resume")}
             </a>
           </div>
 
@@ -80,7 +82,7 @@ export function Footer() {
             onClick={scrollToTop}
             className="flex items-center gap-2 text-xs font-mono text-neutral-400 hover:text-white transition-colors px-3 py-2 rounded-lg bg-neutral-900 border border-neutral-800"
           >
-            <span>TOP</span>
+            <span>{t("footer.top")}</span>
             <ArrowUp className="w-3.5 h-3.5" />
           </button>
         </div>
@@ -99,7 +101,7 @@ export function Footer() {
           </div>
 
           <div>
-            © {currentYear} Wesley Junior. All rights reserved.
+            © {currentYear} Wesley Junior. {t("footer.rights")}
           </div>
         </div>
       </div>

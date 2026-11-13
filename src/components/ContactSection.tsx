@@ -2,10 +2,12 @@
 
 import React, { useState } from "react";
 import { PROFILE } from "@/data/portfolio";
+import { useLanguage } from "@/context/LanguageContext";
 import { Mail, MessageSquare, Globe, Copy, Check } from "lucide-react";
 
 export function ContactSection() {
   const [copiedEmail, setCopiedEmail] = useState<string | null>(null);
+  const { t } = useLanguage();
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
@@ -19,14 +21,14 @@ export function ContactSection() {
         <div className="flex items-center gap-2 mb-3">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
           <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-neutral-400">
-            DIRECT COLLABORATION
+            {t("contact.tag")}
           </span>
         </div>
         <h2 className="text-4xl sm:text-6xl font-bold tracking-tight text-white uppercase mb-5">
-          LET'S BUILD SOMETHING EXCEPTIONAL.
+          {t("contact.title")}
         </h2>
         <p className="max-w-xl text-neutral-400 text-sm sm:text-base leading-relaxed">
-          Open for feature film compositing, high-end commercial campaigns, and remote studio bookings worldwide.
+          {t("contact.subtitle")}
         </p>
       </div>
 
@@ -36,16 +38,18 @@ export function ContactSection() {
           <div>
             <div className="flex items-center justify-between mb-5">
               <span className="text-xs font-mono text-amber-400 uppercase tracking-widest font-semibold">
-                [INTL] {PROFILE.contacts.intl.label}
+                {t("contact.intl.badge")}
               </span>
-              <span className="text-[10px] font-mono text-neutral-500">USD / EUR / REMOTE WIRE</span>
+              <span className="text-[10px] font-mono text-neutral-500">
+                {t("contact.intl.currency")}
+              </span>
             </div>
 
             <h3 className="text-2xl font-bold text-white mb-2">
-              Global Studios & Direct Clients
+              {t("contact.intl.title")}
             </h3>
             <p className="text-xs sm:text-sm text-neutral-400 mb-8 leading-relaxed">
-              {PROFILE.contacts.intl.desc}
+              {t("contact.intl.desc")}
             </p>
           </div>
 
@@ -75,7 +79,7 @@ export function ContactSection() {
               className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-white hover:bg-neutral-200 text-black text-xs font-mono tracking-widest transition-colors font-semibold"
             >
               <Mail className="w-4 h-4" />
-              SEND EMAIL DIRECTLY
+              {t("contact.intl.cta")}
             </a>
           </div>
         </div>
@@ -85,16 +89,18 @@ export function ContactSection() {
           <div>
             <div className="flex items-center justify-between mb-5">
               <span className="text-xs font-mono text-emerald-400 uppercase tracking-widest font-semibold">
-                [BR] {PROFILE.contacts.br.label}
+                {t("contact.br.badge")}
               </span>
-              <span className="text-[10px] font-mono text-neutral-500">BRL / LOCAL CONTRACT</span>
+              <span className="text-[10px] font-mono text-neutral-500">
+                {t("contact.br.currency")}
+              </span>
             </div>
 
             <h3 className="text-2xl font-bold text-white mb-2">
-              National Production & Agencies
+              {t("contact.br.title")}
             </h3>
             <p className="text-xs sm:text-sm text-neutral-400 mb-8 leading-relaxed">
-              {PROFILE.contacts.br.desc}
+              {t("contact.br.desc")}
             </p>
           </div>
 
@@ -126,7 +132,7 @@ export function ContactSection() {
               className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-emerald-950/40 border border-emerald-800/60 text-emerald-300 hover:bg-emerald-900/40 text-xs font-mono tracking-widest transition-colors font-medium"
             >
               <MessageSquare className="w-4 h-4" />
-              WHATSAPP DIRECT ({PROFILE.contacts.br.phone})
+              {t("contact.br.cta")} ({PROFILE.contacts.br.phone})
             </a>
           </div>
         </div>
