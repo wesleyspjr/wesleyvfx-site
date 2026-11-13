@@ -47,7 +47,7 @@ export function BrandStrip() {
 
       {/* Infinite Seamless Marquee - Centered, 8 logos in view, with smooth edge fade and 2x larger scale */}
       <div className="relative max-w-7xl mx-auto overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_160px,_black_calc(100%-160px),transparent_100%)]">
-        <div className="flex items-center gap-6 w-max animate-marquee-slow py-2">
+        <div className="flex items-center gap-6 w-max animate-marquee-ultraslow py-2">
           {marqueeLogos.map((item, idx) => (
             <div
               key={idx}

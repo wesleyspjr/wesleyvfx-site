@@ -1,6 +1,7 @@
 "use client";
 
 import { LanguageProvider } from "@/context/LanguageContext";
+import { Starfield } from "@/components/Starfield";
 import { CustomCursor } from "@/components/CustomCursor";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
@@ -14,7 +15,8 @@ import { Footer } from "@/components/Footer";
 export default function Home() {
   return (
     <LanguageProvider>
-      <main className="min-h-screen bg-[#080808] text-neutral-100 flex flex-col selection:bg-white selection:text-black">
+      <main className="min-h-screen bg-[#04040a] text-neutral-100 flex flex-col selection:bg-purple-500 selection:text-white relative">
+        <Starfield />
         <CustomCursor />
         <Navbar />
         <Hero />
