@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef, useEffect } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 
 export function BrandStrip() {
@@ -8,12 +8,13 @@ export function BrandStrip() {
   const isPt = lang === "pt";
 
   const trackRef = useRef<HTMLDivElement>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const startX = useRef(0);
-  const currentTranslate = useRef(0);
-  const dragTranslate = useRef(0);
+  const offsetRef = useRef(0);
+  const isDraggingRef = useRef(false);
+  const isHoveredRef = useRef(false);
+  const startXRef = useRef(0);
+  const startOffsetRef = useRef(0);
+  const singleWidthRef = useRef(0);
 
-  // Processed logos with 100% transparent backgrounds & correct white/original colors
   const clientLogos = [
     { name: "Netflix", file: "/client-logos/processed/Netflix.png", isWhite: true },
     { name: "Rock in Rio", file: "/client-logos/processed/Rock in rio.png", isWhite: true },
@@ -34,73 +35,105 @@ export function BrandStrip() {
     { name: "Away", file: "/client-logos/processed/away.png" },
   ];
 
-  // Duplicating exactly once gives the seamless 50% loop for CSS transform: translateX(-50%)
-  const doubleLogos = [...clientLogos, ...clientLogos];
+  // 4x duplication guarantees plenty of buffer for seamless wrap-around at any screen size
+  const marqueeLogos = [...clientLogos, ...clientLogos, ...clientLogos, ...clientLogos];
 
-  // Helper to extract current translateX when mouse down initiates drag
-  const getComputedTranslateX = (el: HTMLElement) => {
-    const style = window.getComputedStyle(el);
-    const matrix = new DOMMatrixReadOnly(style.transform);
-    return matrix.m41;
-  };
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return;
+
+    // Calculate width of one repetition (1/4 of total scrollWidth)
+    singleWidthRef.current = el.scrollWidth / 4;
+
+    let animId: number;
+    let lastTime = performance.now();
+    const speed = 40; // Pixels per second (gentle cinematic pace)
+
+    const loop = (currentTime: number) => {
+      const delta = (currentTime - lastTime) / 1000;
+      lastTime = currentTime;
+
+      if (!isDraggingRef.current) {
+        // Auto scroll at steady speed
+        offsetRef.current -= speed * delta;
+
+        // Wrap around seamlessly
+        const loopWidth = singleWidthRef.current || (el.scrollWidth / 4);
+        if (loopWidth > 0) {
+          if (offsetRef.current <= -loopWidth) {
+            offsetRef.current += loopWidth;
+          } else if (offsetRef.current > 0) {
+            offsetRef.current -= loopWidth;
+          }
+        }
+
+        el.style.transform = `translate3d(${offsetRef.current}px, 0, 0)`;
+      }
+
+      animId = requestAnimationFrame(loop);
+    };
+
+    animId = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(animId);
+  }, []);
 
   // Mouse Drag Handlers
   const handleMouseDown = (e: React.MouseEvent) => {
-    const el = trackRef.current;
-    if (!el) return;
-    setIsDragging(true);
-    startX.current = e.pageX;
-    currentTranslate.current = getComputedTranslateX(el);
-    dragTranslate.current = currentTranslate.current;
-    el.style.animationPlayState = "paused";
-    el.style.transform = `translate3d(${dragTranslate.current}px, 0, 0)`;
+    isDraggingRef.current = true;
+    startXRef.current = e.pageX;
+    startOffsetRef.current = offsetRef.current;
+    if (trackRef.current) {
+      trackRef.current.style.cursor = "grabbing";
+    }
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging || !trackRef.current) return;
+    if (!isDraggingRef.current || !trackRef.current) return;
     e.preventDefault();
-    const deltaX = e.pageX - startX.current;
-    const nextTranslate = currentTranslate.current + deltaX;
-    dragTranslate.current = nextTranslate;
-    trackRef.current.style.transform = `translate3d(${nextTranslate}px, 0, 0)`;
+    const deltaX = e.pageX - startXRef.current;
+    let newOffset = startOffsetRef.current + deltaX;
+
+    const loopWidth = singleWidthRef.current || (trackRef.current.scrollWidth / 4);
+    if (loopWidth > 0) {
+      while (newOffset <= -loopWidth) newOffset += loopWidth;
+      while (newOffset > 0) newOffset -= loopWidth;
+    }
+
+    offsetRef.current = newOffset;
+    trackRef.current.style.transform = `translate3d(${newOffset}px, 0, 0)`;
   };
 
   const handleMouseUpOrLeave = () => {
-    if (!isDragging) return;
-    setIsDragging(false);
-    const el = trackRef.current;
-    if (!el) return;
-    el.style.animationPlayState = "running";
-    el.style.transform = "";
+    isDraggingRef.current = false;
+    if (trackRef.current) {
+      trackRef.current.style.cursor = "grab";
+    }
   };
 
-  // Touch Handlers for mobile/tablet
+  // Touch Handlers
   const handleTouchStart = (e: React.TouchEvent) => {
-    const el = trackRef.current;
-    if (!el) return;
-    setIsDragging(true);
-    startX.current = e.touches[0].pageX;
-    currentTranslate.current = getComputedTranslateX(el);
-    dragTranslate.current = currentTranslate.current;
-    el.style.animationPlayState = "paused";
-    el.style.transform = `translate3d(${dragTranslate.current}px, 0, 0)`;
+    isDraggingRef.current = true;
+    startXRef.current = e.touches[0].pageX;
+    startOffsetRef.current = offsetRef.current;
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    if (!isDragging || !trackRef.current) return;
-    const deltaX = e.touches[0].pageX - startX.current;
-    const nextTranslate = currentTranslate.current + deltaX;
-    dragTranslate.current = nextTranslate;
-    trackRef.current.style.transform = `translate3d(${nextTranslate}px, 0, 0)`;
+    if (!isDraggingRef.current || !trackRef.current) return;
+    const deltaX = e.touches[0].pageX - startXRef.current;
+    let newOffset = startOffsetRef.current + deltaX;
+
+    const loopWidth = singleWidthRef.current || (trackRef.current.scrollWidth / 4);
+    if (loopWidth > 0) {
+      while (newOffset <= -loopWidth) newOffset += loopWidth;
+      while (newOffset > 0) newOffset -= loopWidth;
+    }
+
+    offsetRef.current = newOffset;
+    trackRef.current.style.transform = `translate3d(${newOffset}px, 0, 0)`;
   };
 
   const handleTouchEnd = () => {
-    if (!isDragging) return;
-    setIsDragging(false);
-    const el = trackRef.current;
-    if (!el) return;
-    el.style.animationPlayState = "running";
-    el.style.transform = "";
+    isDraggingRef.current = false;
   };
 
   return (
@@ -117,9 +150,9 @@ export function BrandStrip() {
         </span>
       </div>
 
-      {/* GPU Accelerated CSS Marquee with Smooth Edge Fade */}
+      {/* Viewport with CSS side fade overlays */}
       <div
-        className="relative w-full overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_160px,_black_calc(100%-160px),transparent_100%)]"
+        className="relative w-full overflow-hidden cursor-grab"
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUpOrLeave}
@@ -128,13 +161,18 @@ export function BrandStrip() {
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
+        {/* Left Fade Gradient */}
+        <div className="absolute top-0 left-0 w-32 sm:w-48 h-full bg-gradient-to-r from-[#04040a] via-[#04040a]/80 to-transparent z-10 pointer-events-none" />
+
+        {/* Right Fade Gradient */}
+        <div className="absolute top-0 right-0 w-32 sm:w-48 h-full bg-gradient-to-l from-[#04040a] via-[#04040a]/80 to-transparent z-10 pointer-events-none" />
+
+        {/* Continuous GPU-translated Track */}
         <div
           ref={trackRef}
-          className={`flex items-center gap-6 py-3 w-max select-none will-change-transform animate-marquee-ultraslow ${
-            isDragging ? "cursor-grabbing" : "cursor-grab"
-          }`}
+          className="flex items-center gap-6 py-3 w-max select-none will-change-transform"
         >
-          {doubleLogos.map((item, idx) => (
+          {marqueeLogos.map((item, idx) => (
             <div
               key={idx}
               className="group flex flex-col items-center justify-center gap-2 flex-shrink-0"
