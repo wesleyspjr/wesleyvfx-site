@@ -203,11 +203,11 @@ export function FilmCreditsCarousel() {
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        {/* Left Fade Gradient */}
-        <div className="absolute top-0 left-0 w-32 sm:w-48 h-full bg-gradient-to-r from-[#04040a] via-[#04040a]/80 to-transparent z-10 pointer-events-none" />
+        {/* Left Fade Gradient (Agressive vignette to frame ~4 posters) */}
+        <div className="absolute top-0 left-0 w-36 sm:w-64 lg:w-[400px] xl:w-[440px] h-full bg-gradient-to-r from-[#04040a] via-[#04040a]/90 via-50% to-transparent z-10 pointer-events-none" />
 
-        {/* Right Fade Gradient */}
-        <div className="absolute top-0 right-0 w-32 sm:w-48 h-full bg-gradient-to-l from-[#04040a] via-[#04040a]/80 to-transparent z-10 pointer-events-none" />
+        {/* Right Fade Gradient (Agressive vignette to frame ~4 posters) */}
+        <div className="absolute top-0 right-0 w-36 sm:w-64 lg:w-[400px] xl:w-[440px] h-full bg-gradient-to-l from-[#04040a] via-[#04040a]/90 via-50% to-transparent z-10 pointer-events-none" />
 
         {/* Continuous GPU-translated Track */}
         <div
