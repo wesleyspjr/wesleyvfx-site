@@ -1,16 +1,17 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 
 export function BrandStrip() {
   const { lang } = useLanguage();
   const isPt = lang === "pt";
 
-  const containerRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const startX = useRef(0);
-  const startScrollLeft = useRef(0);
+  const currentTranslate = useRef(0);
+  const dragTranslate = useRef(0);
 
   // Processed logos with 100% transparent backgrounds & correct white/original colors
   const clientLogos = [
@@ -33,71 +34,73 @@ export function BrandStrip() {
     { name: "Away", file: "/client-logos/processed/away.png" },
   ];
 
-  // Repeat for continuous seamless wrapping
-  const marqueeLogos = [...clientLogos, ...clientLogos, ...clientLogos, ...clientLogos];
+  // Duplicating exactly once gives the seamless 50% loop for CSS transform: translateX(-50%)
+  const doubleLogos = [...clientLogos, ...clientLogos];
 
-  // Auto-scroll loop + Mouse control handling
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
+  // Helper to extract current translateX when mouse down initiates drag
+  const getComputedTranslateX = (el: HTMLElement) => {
+    const style = window.getComputedStyle(el);
+    const matrix = new DOMMatrixReadOnly(style.transform);
+    return matrix.m41;
+  };
 
-    let animId: number;
-    const speed = 0.45; // Gentle majestic speed (slower pace as requested)
-
-    const step = () => {
-      if (!isDragging) {
-        el.scrollLeft += speed;
-        const half = el.scrollWidth / 2;
-        if (el.scrollLeft >= half) {
-          el.scrollLeft -= half;
-        } else if (el.scrollLeft <= 0) {
-          el.scrollLeft += half;
-        }
-      }
-      animId = requestAnimationFrame(step);
-    };
-
-    animId = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(animId);
-  }, [isDragging]);
-
-  // Mouse Drag Events
+  // Mouse Drag Handlers
   const handleMouseDown = (e: React.MouseEvent) => {
-    if (!containerRef.current) return;
+    const el = trackRef.current;
+    if (!el) return;
     setIsDragging(true);
-    startX.current = e.pageX - containerRef.current.offsetLeft;
-    startScrollLeft.current = containerRef.current.scrollLeft;
+    startX.current = e.pageX;
+    currentTranslate.current = getComputedTranslateX(el);
+    dragTranslate.current = currentTranslate.current;
+    el.style.animationPlayState = "paused";
+    el.style.transform = `translate3d(${dragTranslate.current}px, 0, 0)`;
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging || !containerRef.current) return;
+    if (!isDragging || !trackRef.current) return;
     e.preventDefault();
-    const x = e.pageX - containerRef.current.offsetLeft;
-    const walk = (x - startX.current) * 1.4;
-    containerRef.current.scrollLeft = startScrollLeft.current - walk;
+    const deltaX = e.pageX - startX.current;
+    const nextTranslate = currentTranslate.current + deltaX;
+    dragTranslate.current = nextTranslate;
+    trackRef.current.style.transform = `translate3d(${nextTranslate}px, 0, 0)`;
   };
 
   const handleMouseUpOrLeave = () => {
+    if (!isDragging) return;
     setIsDragging(false);
+    const el = trackRef.current;
+    if (!el) return;
+    el.style.animationPlayState = "running";
+    el.style.transform = "";
   };
 
-  // Touch Drag Events for Mobile / Tablet
+  // Touch Handlers for mobile/tablet
   const handleTouchStart = (e: React.TouchEvent) => {
-    if (!containerRef.current) return;
+    const el = trackRef.current;
+    if (!el) return;
     setIsDragging(true);
-    startX.current = e.touches[0].pageX - containerRef.current.offsetLeft;
-    startScrollLeft.current = containerRef.current.scrollLeft;
+    startX.current = e.touches[0].pageX;
+    currentTranslate.current = getComputedTranslateX(el);
+    dragTranslate.current = currentTranslate.current;
+    el.style.animationPlayState = "paused";
+    el.style.transform = `translate3d(${dragTranslate.current}px, 0, 0)`;
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    if (!isDragging || !containerRef.current) return;
-    const x = e.touches[0].pageX - containerRef.current.offsetLeft;
-    const walk = (x - startX.current) * 1.4;
-    containerRef.current.scrollLeft = startScrollLeft.current - walk;
+    if (!isDragging || !trackRef.current) return;
+    const deltaX = e.touches[0].pageX - startX.current;
+    const nextTranslate = currentTranslate.current + deltaX;
+    dragTranslate.current = nextTranslate;
+    trackRef.current.style.transform = `translate3d(${nextTranslate}px, 0, 0)`;
   };
 
   const handleTouchEnd = () => {
+    if (!isDragging) return;
     setIsDragging(false);
+    const el = trackRef.current;
+    if (!el) return;
+    el.style.animationPlayState = "running";
+    el.style.transform = "";
   };
 
   return (
@@ -114,22 +117,24 @@ export function BrandStrip() {
         </span>
       </div>
 
-      {/* Interactive Draggable & Auto-scrolling Track with Smooth Edge Fade */}
-      <div className="relative max-w-7xl mx-auto overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_160px,_black_calc(100%-160px),transparent_100%)]">
+      {/* GPU Accelerated CSS Marquee with Smooth Edge Fade */}
+      <div
+        className="relative w-full overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_160px,_black_calc(100%-160px),transparent_100%)]"
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUpOrLeave}
+        onMouseLeave={handleMouseUpOrLeave}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
         <div
-          ref={containerRef}
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUpOrLeave}
-          onMouseLeave={handleMouseUpOrLeave}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-          className={`flex items-center gap-6 overflow-x-hidden py-3 no-scrollbar select-none ${
+          ref={trackRef}
+          className={`flex items-center gap-6 py-3 w-max select-none will-change-transform animate-marquee-ultraslow ${
             isDragging ? "cursor-grabbing" : "cursor-grab"
           }`}
         >
-          {marqueeLogos.map((item, idx) => (
+          {doubleLogos.map((item, idx) => (
             <div
               key={idx}
               className="group flex flex-col items-center justify-center gap-2 flex-shrink-0"
