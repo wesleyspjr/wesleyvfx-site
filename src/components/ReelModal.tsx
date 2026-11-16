@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, useRef, useCallback } from "react";
+import { createPortal } from "react-dom";
 import { X, ExternalLink, Play, Pause, StepBack, StepForward, Clapperboard, Keyboard } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import VimeoPlayer from "@vimeo/player";
@@ -32,6 +33,11 @@ export function ReelModal({ isOpen, onClose, youtubeId, vimeoId, videoUrl, title
   const [isPlaying, setIsPlaying] = useState(false);
   const [displayTime, setDisplayTime] = useState("00:00:00:00");
   const [isReady, setIsReady] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const FRAME_STEP = 1 / 24; // 24 FPS feature frame duration (0.04166s)
 
@@ -273,12 +279,12 @@ export function ReelModal({ isOpen, onClose, youtubeId, vimeoId, videoUrl, title
     };
   }, [isOpen, onClose, stepFrame, togglePlay]);
 
-  if (!isOpen) return null;
+  if (!isOpen || !mounted) return null;
 
-  return (
+  return createPortal(
     <div
       onClick={onClose}
-      className="fixed inset-0 z-[10000] flex items-center justify-center p-3 sm:p-6 md:p-10 bg-black/95 backdrop-blur-2xl animate-in fade-in duration-200 cursor-pointer"
+      className="fixed inset-0 z-[99999] flex items-center justify-center p-3 sm:p-6 md:p-10 bg-black/95 backdrop-blur-2xl animate-in fade-in duration-200 cursor-pointer"
     >
       <div
         onClick={(e) => e.stopPropagation()}
@@ -372,6 +378,7 @@ export function ReelModal({ isOpen, onClose, youtubeId, vimeoId, videoUrl, title
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
