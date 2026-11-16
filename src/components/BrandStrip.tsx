@@ -4,7 +4,7 @@ import React, { useRef, useEffect } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 
 export function BrandStrip() {
-  const { lang } = useLanguage();
+  const { lang, t } = useLanguage();
   const isPt = lang === "pt";
 
   const trackRef = useRef<HTMLDivElement>(null);
@@ -144,9 +144,7 @@ export function BrandStrip() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 mb-8 text-center">
         <span className="text-[11px] font-mono uppercase tracking-[0.3em] text-neutral-400">
-          {isPt
-            ? "MARCAS & PRODUÇÕES QUE JÁ VEICULARAM TRABALHOS COM MINHA PARTICIPAÇÃO"
-            : "BRANDS & PRODUCTIONS FEATURING MY WORK"}
+          {t("brands.title")}
         </span>
       </div>
 

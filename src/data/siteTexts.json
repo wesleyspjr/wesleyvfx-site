@@ -1,0 +1,299 @@
+{
+  "_instrucoes": "Este arquivo centraliza TODOS os textos do site em Português (pt) e Inglês (en). Você pode alterar qualquer frase ou palavra aqui diretamente no VS Code ou Bloco de Notas. Ao salvar, as alterações refletem no site.",
+  "perfil": {
+    "nome": "Wesley Junior",
+    "titulo": "VFX Compositor & Motion Designer",
+    "localizacao": {
+      "pt": "Brasil • Atuação Internacional",
+      "en": "Brazil • Working Worldwide"
+    },
+    "disponibilidade": {
+      "pt": "Disponível para projetos selecionados",
+      "en": "Available for selected projects"
+    },
+    "contatos": {
+      "emailInternacional": "home@wesleyvfx.com.br",
+      "emailBrasil": "contato@wesleyvfx.com.br",
+      "telefoneWhatsapp": "+55 11 94249-2876",
+      "linkWhatsapp": "https://wa.me/5511942492876?text=Ol%C3%A1%20Wesley,%20vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar%20sobre%20um%20projeto."
+    }
+  },
+  "menu": {
+    "pt": {
+      "reels": "REEL",
+      "trabalhos": "TRABALHOS",
+      "breakdown": "BREAKDOWN",
+      "pipeline": "PIPELINE",
+      "contato": "CONTATO",
+      "curriculo": "CURRÍCULO",
+      "entrarEmContato": "ENTRAR EM CONTATO"
+    },
+    "en": {
+      "reels": "REEL",
+      "trabalhos": "WORKS",
+      "breakdown": "BREAKDOWN",
+      "pipeline": "PIPELINE",
+      "contato": "CONTACT",
+      "curriculo": "RESUME",
+      "entrarEmContato": "GET IN TOUCH"
+    }
+  },
+  "hero": {
+    "pt": {
+      "tituloPrincipal": "COMPOSITOR DE EFEITOS VISUAIS & MOTION DESIGNER.",
+      "biografia": "Mais de 5 anos entregando composição fotorrealista e design de movimento para produções cinematográficas de Hollywood, grandes marcas e estúdios criativos.",
+      "abaReelComposicao": "01 // REEL DE COMPOSIÇÃO",
+      "abaReelMotion": "02 // REEL DE MOTION (VIMEO)",
+      "cliqueParaAssistir": "CLIQUE PARA ASSISTIR",
+      "assistirComSom": "ASSISTIR COM SOM",
+      "telaCheia": "TELA CHEIA DISPONÍVEL",
+      "detalhesReelComposicao": "Nuke Multi-pass • Integração CGI • Cleanups • 3D Tracking",
+      "detalhesReelMotion": "After Effects • Tipografia Cinética • Styleframes Comerciais"
+    },
+    "en": {
+      "tituloPrincipal": "VISUAL EFFECTS COMPOSITOR & MOTION DESIGNER.",
+      "biografia": "Over 5 years crafting photorealistic compositions and dynamic motion systems for Hollywood productions, global brands, and creative studios.",
+      "abaReelComposicao": "01 // COMPOSITING REEL",
+      "abaReelMotion": "02 // MOTION REEL (VIMEO)",
+      "cliqueParaAssistir": "CLICK TO PLAY",
+      "assistirComSom": "WATCH WITH SOUND",
+      "telaCheia": "FULLSCREEN AVAILABLE",
+      "detalhesReelComposicao": "Nuke Multi-pass • CGI Integration • Cleanups • 3D Tracking",
+      "detalhesReelMotion": "After Effects • Kinetic Typography • Commercial Styleframes"
+    }
+  },
+  "marcasCarrossel": {
+    "pt": {
+      "tituloFaixa": "MARCAS & PRODUÇÕES QUE JÁ VEICULARAM TRABALHOS COM MINHA PARTICIPAÇÃO"
+    },
+    "en": {
+      "tituloFaixa": "BRANDS & PRODUCTIONS FEATURING MY WORK"
+    }
+  },
+  "imdbFilmes": {
+    "pt": {
+      "tag": "CRÉDITOS OFICIAIS DO IMDB",
+      "titulo": "FILMES & SÉRIES.",
+      "botaoVerImdb": "VER NO IMDB PRO"
+    },
+    "en": {
+      "tag": "OFFICIAL IMDB FILMOGRAPHY",
+      "titulo": "FEATURE PRODUCTIONS & SERIES.",
+      "botaoVerImdb": "VIEW ON IMDB"
+    }
+  },
+  "projetosSelecionados": {
+    "pt": {
+      "tag": "ARQUIVO SELECIONADO",
+      "titulo": "TRABALHOS EM DESTAQUE.",
+      "subtitulo": "Grade de efeitos visuais recentes, comerciais e projetos de motion design.",
+      "categorias": {
+        "todos": "TODOS",
+        "vfx": "COMPOSIÇÃO VFX",
+        "motion": "MOTION DESIGN",
+        "comercial": "PUBLICIDADE"
+      },
+      "cliqueParaAssistir": "Clique para assistir ao breakdown"
+    },
+    "en": {
+      "tag": "CURATED ARCHIVE",
+      "titulo": "SELECTED WORKS.",
+      "subtitulo": "Grid of recent visual effects, commercial spots, and motion design pieces.",
+      "categorias": {
+        "todos": "ALL",
+        "vfx": "VFX COMPOSITING",
+        "motion": "MOTION DESIGN",
+        "comercial": "COMMERCIAL"
+      },
+      "cliqueParaAssistir": "Click to watch breakdown"
+    }
+  },
+  "breakdownAntesDepois": {
+    "pt": {
+      "tag": "RIGOR TÉCNICO & ARTÍSTICO",
+      "titulo": "VFX BREAKDOWN & PIPELINE.",
+      "subtitulo": "Composição fotorrealista baseada em nós (node-based) e design de movimento projetados para cinema e publicidade de alto padrão.",
+      "instrucaoArrastar": "◄ ARRASTE PARA COMPARAR ►",
+      "comparacoes": {
+        "greenscreen": {
+          "titulo": "Extração de Green Screen & Integração de Cenário",
+          "projeto": "Sequência Cinematográfica",
+          "labelAntes": "PLATE BRUTO GREEN SCREEN",
+          "labelDepois": "COMPOSIÇÃO FINAL (NUKE)",
+          "descricao": "Extração sub-pixel de fios de cabelo, reconstrução de luz de borda integrada e gradação fotométrica de cor."
+        },
+        "cleanup": {
+          "titulo": "Clean-up Complexo, Remoção de Cabos & Marcadores",
+          "projeto": "Comercial Live Action",
+          "labelAntes": "PLATE COM CABOS & MARCADORES",
+          "labelDepois": "CLEAN PLATE FINAL INVISÍVEL",
+          "descricao": "Remoção invisível de equipamentos e cabos, reconstrução de texturas, motion blur e síntese procedural de granulação 35mm."
+        }
+      }
+    },
+    "en": {
+      "tag": "TECHNICAL & ARTISTIC RIGOR",
+      "titulo": "VFX BREAKDOWN & PIPELINE.",
+      "subtitulo": "Node-based photorealistic compositing and kinetic motion design engineered for feature films and commercial broadcasts.",
+      "instrucaoArrastar": "◄ DRAG TO COMPARE ►",
+      "comparacoes": {
+        "greenscreen": {
+          "titulo": "Green Screen Keying & Environment Integration",
+          "projeto": "Production Feature Sequence",
+          "labelAntes": "RAW GREEN SCREEN PLATE",
+          "labelDepois": "FINAL COMPOSITE (NUKE)",
+          "descricao": "Sub-pixel hair key extraction, realistic edge illumination reconstruction matching background plate, and photometric color grading."
+        },
+        "cleanup": {
+          "titulo": "Complex Rig, Wire & Marker Removal",
+          "projeto": "Commercial Live Plate",
+          "labelAntes": "PLATE WITH RIGS & MARKERS",
+          "labelDepois": "SEAMLESS CLEAN PLATE",
+          "descricao": "Invisible rig removal, tracking marker reconstruction, optical motion blur matching, and authentic film grain synthesis."
+        }
+      }
+    }
+  },
+  "estudioInfraestrutura": {
+    "pt": {
+      "tag": "INFRAESTRUTURA & CONFIABILIDADE DE ESTÚDIO",
+      "titulo": "POR QUE ME CONTRATAR.",
+      "subtitulo": "Pipeline técnico à prova de falhas, projetado para zero downtime e integração profissional com estúdios e agências.",
+      "itens": [
+        {
+          "codigo": "01",
+          "titulo": "Duas Máquinas Espelhadas",
+          "destaque": "ZERO HARDWARE DOWNTIME",
+          "descricao": "Caiu o computador? A máquina de backup assume no segundo seguinte. Zero atraso na entrega."
+        },
+        {
+          "codigo": "02",
+          "titulo": "Internet 1 Gbps + Backup 5G",
+          "destaque": "SEMPRE CONECTADO",
+          "descricao": "Zero desculpas de 'caiu a internet'. 1000 Mb/s dedicados com contingência móvel automática."
+        },
+        {
+          "codigo": "03",
+          "titulo": "Storage NAS 10GbE em RAID",
+          "destaque": "RÁPIDO & REDUNDANTE",
+          "descricao": "Armazenamento massivo em rede de alta velocidade com redundância total para seus arquivos e renders."
+        },
+        {
+          "codigo": "04",
+          "titulo": "Licença Comercial NukeX",
+          "destaque": "100% LEGAL & CONFORME",
+          "descricao": "Software 100% legalizado pela The Foundry. Total conformidade com auditorias de grandes estúdios."
+        },
+        {
+          "codigo": "05",
+          "titulo": "Nobreak Senoidal (UPS)",
+          "destaque": "ENERGIA CONTÍNUA",
+          "descricao": "Caiu a energia do bairro? O nobreak mantém máquinas e renders rodando sem corromper arquivos."
+        },
+        {
+          "codigo": "06",
+          "titulo": "Pipeline de Cor (ACES / OCIO)",
+          "destaque": "FIDELIDADE CINEMATOGRÁFICA",
+          "descricao": "Fidelidade absoluta de cor em padrão de cinema, garantindo consistência do RAW ao master final."
+        }
+      ]
+    },
+    "en": {
+      "tag": "STUDIO INFRASTRUCTURE & RELIABILITY",
+      "titulo": "WHY HIRE ME.",
+      "subtitulo": "Fail-safe technical pipeline engineered for zero downtime and seamless studio collaboration.",
+      "itens": [
+        {
+          "codigo": "01",
+          "titulo": "Dual Workstations",
+          "destaque": "ZERO HARDWARE DOWNTIME",
+          "descricao": "If a computer ever fails, the secondary backup workstation takes over in seconds. Zero delays."
+        },
+        {
+          "codigo": "02",
+          "titulo": "1 Gbps Fiber + 5G Fallback",
+          "destaque": "ALWAYS CONNECTED",
+          "descricao": "Instant 4K/6K EXR transfers. Automatic 5G failover means you never hear 'the internet dropped'."
+        },
+        {
+          "codigo": "03",
+          "titulo": "Local 10GbE NAS RAID",
+          "destaque": "FAST & REDUNDANT",
+          "descricao": "Multi-terabyte high-speed network storage. Heavy caches and master files protected against disk loss."
+        },
+        {
+          "codigo": "04",
+          "titulo": "Official NukeX Commercial License",
+          "destaque": "100% LEGAL & COMPLIANT",
+          "descricao": "Fully compliant commercial The Foundry license. Approved for strict studio and security audits."
+        },
+        {
+          "codigo": "05",
+          "titulo": "UPS Battery Protection",
+          "destaque": "CONTINUOUS POWER",
+          "descricao": "Power outages won't stop the pipeline. Renders and comp scripts remain safe and running."
+        },
+        {
+          "codigo": "06",
+          "titulo": "Color Management (ACES / OCIO)",
+          "destaque": "CINEMATIC FIDELITY",
+          "descricao": "Industry-standard color pipelines ensuring pinpoint consistency from camera RAW to final delivery."
+        }
+      ]
+    }
+  },
+  "contato": {
+    "pt": {
+      "tag": "COLABORAÇÃO DIRETA",
+      "titulo": "VAMOS CRIAR ALGO EXTRAORDINÁRIO.",
+      "subtitulo": "Disponível para composição em longa-metragens, campanhas comerciais de alto nível e contratações remotas para estúdios no mundo todo.",
+      "internacional": {
+        "etiqueta": "[INTL] Contratos Internacionais & Remotos",
+        "moeda": "USD / EUR / WIRE",
+        "titulo": "Estúdios Globais & Clientes Diretos",
+        "descricao": "Para estúdios e produtoras no exterior com faturamento em moeda estrangeira (USD / EUR / Wire).",
+        "botao": "ENVIAR E-MAIL DIRETO"
+      },
+      "brasil": {
+        "etiqueta": "[BR] Agências & Produtoras Brasil",
+        "moeda": "BRL / NF / CONTRATO",
+        "titulo": "Produções Nacionais & Agências",
+        "descricao": "Produtoras e marcas diretas no Brasil com emissão de nota fiscal e pagamento em reais.",
+        "botao": "CHAMAR NO WHATSAPP"
+      }
+    },
+    "en": {
+      "tag": "DIRECT COLLABORATION",
+      "titulo": "LET'S BUILD SOMETHING EXCEPTIONAL.",
+      "subtitulo": "Open for feature film compositing, high-end commercial campaigns, and remote studio bookings worldwide.",
+      "internacional": {
+        "etiqueta": "[INTL] International & Remote Bookings",
+        "moeda": "USD / EUR / REMOTE WIRE",
+        "titulo": "Global Studios & Direct Clients",
+        "descricao": "For studios, remote commercial contracts, and international feature work (USD / EUR / Wire).",
+        "botao": "SEND EMAIL DIRECTLY"
+      },
+      "brasil": {
+        "etiqueta": "[BR] National & Local Agencies",
+        "moeda": "BRL / LOCAL CONTRACT",
+        "titulo": "National Production & Agencies",
+        "descricao": "Production companies and direct brands within Brazil (BRL / Direct Invoice).",
+        "botao": "WHATSAPP DIRECT"
+      }
+    }
+  },
+  "rodape": {
+    "pt": {
+      "funcao": "COMPOSITOR DE EFEITOS VISUAIS & MOTION DESIGNER • BRASIL / MUNDO",
+      "curriculo": "CURRÍCULO (PDF)",
+      "topo": "TOPO",
+      "direitos": "Todos os direitos reservados."
+    },
+    "en": {
+      "funcao": "VISUAL EFFECTS COMPOSITOR & MOTION DESIGNER • BRAZIL / WORLDWIDE",
+      "curriculo": "RESUME (PDF)",
+      "topo": "TOP",
+      "direitos": "All rights reserved."
+    }
+  }
+}

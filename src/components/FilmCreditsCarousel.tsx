@@ -5,7 +5,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import { Clapperboard } from "lucide-react";
 
 export function FilmCreditsCarousel() {
-  const { lang } = useLanguage();
+  const { lang, t } = useLanguage();
   const isPt = lang === "pt";
 
   const trackRef = useRef<HTMLDivElement>(null);
@@ -175,11 +175,11 @@ export function FilmCreditsCarousel() {
           <div className="flex items-center gap-2 mb-2">
             <Clapperboard className="w-4 h-4 text-cyan-400" />
             <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-neutral-400">
-              {isPt ? "CRÉDITOS OFICIAIS DO IMDB" : "OFFICIAL IMDB FILMOGRAPHY"}
+              {t("imdb.tag")}
             </span>
           </div>
           <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-white uppercase">
-            {isPt ? "FILMES & SÉRIES." : "FEATURE PRODUCTIONS & SERIES."}
+            {t("imdb.title")}
           </h2>
         </div>
         <a
@@ -188,7 +188,7 @@ export function FilmCreditsCarousel() {
           rel="noopener noreferrer"
           className="text-xs font-mono text-purple-300 hover:text-white transition-colors flex items-center gap-2 uppercase tracking-widest bg-purple-950/40 border border-purple-800/60 px-4 py-2 rounded-full shadow-lg hover:border-purple-500"
         >
-          <span>{isPt ? "VER NO IMDB PRO" : "VIEW ON IMDB"}</span>
+          <span>{t("imdb.btn")}</span>
         </a>
       </div>
 
