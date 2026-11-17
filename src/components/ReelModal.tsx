@@ -53,29 +53,40 @@ export function ReelModal({ isOpen, onClose, youtubeId, vimeoId, videoUrl, title
   };
 
   // Determine platform & ID
-  let activePlatform: "youtube" | "vimeo" | "none" = "none";
+  let activePlatform: "youtube" | "vimeo" | "facebook" | "direct" | "none" = "none";
   let activeYtId = youtubeId || "";
   let activeVimeoId = vimeoId || "";
+  let activeFbUrl = "";
+  let activeDirectUrl = "";
   let externalUrl = "";
 
-  if (vimeoId) {
+  // Check youtubeId or videoUrl
+  const rawTarget = youtubeId || videoUrl || "";
+
+  if (vimeoId || rawTarget.includes("vimeo.com")) {
     activePlatform = "vimeo";
-    externalUrl = `https://vimeo.com/${vimeoId}`;
-  } else if (youtubeId) {
-    activePlatform = "youtube";
-    externalUrl = `https://www.youtube.com/watch?v=${youtubeId}`;
-  } else if (videoUrl) {
-    if (videoUrl.includes("vimeo.com")) {
-      activePlatform = "vimeo";
-      const match = videoUrl.match(/vimeo\.com\/(\d+)/);
-      activeVimeoId = match ? match[1] : "";
-      externalUrl = videoUrl;
+    if (vimeoId) {
+      activeVimeoId = vimeoId;
     } else {
-      activePlatform = "youtube";
-      const match = videoUrl.match(/(?:v=|\/)([0-9A-Za-z_-]{11})(?:[&?]|$)/);
-      activeYtId = match ? match[1] : "";
-      externalUrl = videoUrl;
+      const match = rawTarget.match(/vimeo\.com\/(\d+)/);
+      activeVimeoId = match ? match[1] : rawTarget;
     }
+    externalUrl = `https://vimeo.com/${activeVimeoId}`;
+  } else if (rawTarget.includes("facebook.com") || rawTarget.includes("fb.watch") || (/^\d{10,20}$/.test(rawTarget) && !vimeoId)) {
+    activePlatform = "facebook";
+    const fbVideoId = rawTarget.match(/(?:videos\/|v=|watch\/\?v=)?(\d{10,20})/)?.[1] || rawTarget;
+    activeFbUrl = `https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fwatch%2F%3Fv%3D${fbVideoId}&show_text=0&autoplay=1`;
+    externalUrl = `https://www.facebook.com/watch/?v=${fbVideoId}`;
+  } else if (rawTarget.endsWith(".mp4") || rawTarget.endsWith(".webm")) {
+    activePlatform = "direct";
+    activeDirectUrl = rawTarget;
+    externalUrl = rawTarget;
+  } else if (rawTarget) {
+    activePlatform = "youtube";
+    // Extract 11-char YouTube ID if a full URL was provided
+    const match = rawTarget.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([0-9A-Za-z_-]{11})/);
+    activeYtId = match ? match[1] : rawTarget;
+    externalUrl = `https://www.youtube.com/watch?v=${activeYtId}`;
   }
 
   // Initialize Players when modal opens
@@ -87,24 +98,22 @@ export function ReelModal({ isOpen, onClose, youtubeId, vimeoId, videoUrl, title
     let isSubscribed = true;
 
     if (activePlatform === "youtube" && activeYtId) {
-      const loadYT = () => {
-        if (!containerRef.current) return;
+      if (containerRef.current) {
+        // Embed YouTube directly via robust responsive iframe with JS API enabled
+        const iframe = document.createElement("iframe");
+        iframe.id = "yt-player-iframe";
+        iframe.src = `https://www.youtube-nocookie.com/embed/${activeYtId}?autoplay=1&enablejsapi=1&rel=0&modestbranding=1&origin=${encodeURIComponent(window.location.origin)}`;
+        iframe.className = "w-full h-full border-0";
+        iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+        iframe.allowFullscreen = true;
         
-        // Clear container
-        containerRef.current.innerHTML = '<div id="yt-player-element" style="width:100%;height:100%;"></div>';
+        containerRef.current.innerHTML = "";
+        containerRef.current.appendChild(iframe);
 
         const initPlayer = () => {
           if (!window.YT || !window.YT.Player) return;
           try {
-            ytPlayerRef.current = new window.YT.Player("yt-player-element", {
-              videoId: activeYtId,
-              playerVars: {
-                autoplay: 1,
-                modestbranding: 1,
-                rel: 0,
-                enablejsapi: 1,
-                controls: 1,
-              },
+            ytPlayerRef.current = new window.YT.Player(iframe, {
               events: {
                 onReady: () => {
                   if (isSubscribed) {
@@ -121,15 +130,12 @@ export function ReelModal({ isOpen, onClose, youtubeId, vimeoId, videoUrl, title
                 },
               },
             });
-          } catch (err) {
-            console.error("YT Player init error:", err);
-          }
+          } catch (_) {}
         };
 
         if (window.YT && window.YT.Player) {
           initPlayer();
         } else {
-          // Load YouTube iframe API script if not present
           const existingScript = document.getElementById("yt-iframe-api");
           if (!existingScript) {
             const tag = document.createElement("script");
@@ -143,9 +149,7 @@ export function ReelModal({ isOpen, onClose, youtubeId, vimeoId, videoUrl, title
             initPlayer();
           };
         }
-      };
-
-      loadYT();
+      }
     } else if (activePlatform === "vimeo" && activeVimeoId) {
       if (containerRef.current) {
         containerRef.current.innerHTML = "";
@@ -176,6 +180,14 @@ export function ReelModal({ isOpen, onClose, youtubeId, vimeoId, videoUrl, title
         } catch (err) {
           console.error("Vimeo init error:", err);
         }
+      }
+    } else if (activePlatform === "facebook" && activeFbUrl) {
+      if (containerRef.current) {
+        containerRef.current.innerHTML = `<iframe src="${activeFbUrl}" class="w-full h-full border-0" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen="true"></iframe>`;
+      }
+    } else if (activePlatform === "direct" && activeDirectUrl) {
+      if (containerRef.current) {
+        containerRef.current.innerHTML = `<video src="${activeDirectUrl}" controls autoplay class="w-full h-full object-contain"></video>`;
       }
     }
 
