@@ -12,6 +12,10 @@ export interface Project {
   previewMedia: string; // Active autoplay preview (GIF or MP4)
   youtubeId?: string;
   vimeoId?: string;
+  videoCompleto?: {
+    tipo: string;
+    urlOuId: string;
+  };
 }
 
 export interface BreakdownPair {
@@ -108,6 +112,7 @@ export const PROJECTS: Project[] = projectsConfig.projetos.map((p) => ({
   videoUrl: p.autoplayMedia.endsWith(".mp4") ? p.autoplayMedia : undefined,
   youtubeId: p.videoCompleto.tipo === "youtube" ? p.videoCompleto.urlOuId : undefined,
   vimeoId: p.videoCompleto.tipo === "vimeo" ? p.videoCompleto.urlOuId : undefined,
+  videoCompleto: p.videoCompleto,
 }));
 
 // Breakdown comparisons using user's actual local files in public/breakdowns/

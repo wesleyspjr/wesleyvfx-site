@@ -44,12 +44,14 @@ export function SelectedProjects() {
             key={project.id}
             data-cursor="play"
             onClick={() => {
-              // Se tiver youtubeId, vimeoId ou vídeo MP4, abre no modal
-              const targetVideo = project.youtubeId || project.vimeoId 
+              const vc = project.videoCompleto;
+              const hasFullVideo = vc && vc.tipo !== "none" && vc.urlOuId;
+
+              const targetVideo = hasFullVideo
                 ? {
-                    youtubeId: project.youtubeId,
-                    vimeoId: project.vimeoId,
-                    videoUrl: undefined,
+                    youtubeId: vc.tipo === "youtube" ? vc.urlOuId : undefined,
+                    vimeoId: vc.tipo === "vimeo" ? vc.urlOuId : undefined,
+                    videoUrl: vc.tipo !== "youtube" && vc.tipo !== "vimeo" ? vc.urlOuId : undefined,
                     title: `${project.client} — ${project.title}`,
                   }
                 : project.previewMedia?.endsWith(".mp4")
