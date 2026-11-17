@@ -14,7 +14,7 @@ export function Hero() {
   const activeReel = PROFILE.reels[activeReelKey];
 
   return (
-    <section id="hero" className="relative min-h-[96vh] pt-32 pb-24 flex flex-col justify-center items-center px-4 sm:px-6 overflow-hidden">
+    <section id="hero" className="relative min-h-[96vh] pt-32 pb-24 flex flex-col justify-center items-center px-4 sm:px-6 overflow-hidden"><div id="reels" className="absolute top-0 pointer-events-none" />
       {/* Background High-Definition Original Action VFX Video (No blue halo, no banding) */}
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
         <video

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { createPortal } from "react-dom";
-import { X, ExternalLink, Play, Pause, StepBack, StepForward, Clapperboard, Keyboard } from "lucide-react";
+import { X, ExternalLink, Play, Pause, StepBack, StepForward, Clapperboard, Keyboard, AlertCircle } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import VimeoPlayer from "@vimeo/player";
 
@@ -26,11 +26,14 @@ export function ReelModal({ isOpen, onClose, youtubeId, vimeoId, videoUrl, title
   const { lang } = useLanguage();
   const isPt = lang === "pt";
 
-  const containerRef = useRef<HTMLDivElement>(null);
+  const vimeoContainerRef = useRef<HTMLDivElement>(null);
+  const directVideoRef = useRef<HTMLVideoElement>(null);
+  const ytIframeRef = useRef<HTMLIFrameElement>(null);
   const ytPlayerRef = useRef<any>(null);
   const vimeoPlayerRef = useRef<VimeoPlayer | null>(null);
 
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [currentTimeSec, setCurrentTimeSec] = useState(0);
   const [displayTime, setDisplayTime] = useState("00:00:00:00");
   const [isReady, setIsReady] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -39,7 +42,7 @@ export function ReelModal({ isOpen, onClose, youtubeId, vimeoId, videoUrl, title
     setMounted(true);
   }, []);
 
-  const FRAME_STEP = 1 / 24; // 24 FPS feature frame duration (0.04166s)
+  const FRAME_STEP = 1 / 24; // 24 FPS frame duration (0.04166s)
 
   const formatTimecode = (seconds: number) => {
     if (isNaN(seconds) || seconds < 0) return "00:00:00:00";
@@ -60,10 +63,9 @@ export function ReelModal({ isOpen, onClose, youtubeId, vimeoId, videoUrl, title
   let activeDirectUrl = "";
   let externalUrl = "";
 
-  // Check youtubeId or videoUrl
   const rawTarget = youtubeId || videoUrl || "";
 
-  if (vimeoId || rawTarget.includes("vimeo.com")) {
+  if (vimeoId || (rawTarget && rawTarget.includes("vimeo.com"))) {
     activePlatform = "vimeo";
     if (vimeoId) {
       activeVimeoId = vimeoId;
@@ -72,195 +74,167 @@ export function ReelModal({ isOpen, onClose, youtubeId, vimeoId, videoUrl, title
       activeVimeoId = match ? match[1] : rawTarget;
     }
     externalUrl = `https://vimeo.com/${activeVimeoId}`;
-  } else if (rawTarget.includes("facebook.com") || rawTarget.includes("fb.watch") || (/^\d{10,20}$/.test(rawTarget) && !vimeoId)) {
+  } else if (rawTarget && (rawTarget.includes("facebook.com") || rawTarget.includes("fb.watch") || /^\d{10,20}$/.test(rawTarget))) {
     activePlatform = "facebook";
     const fbVideoId = rawTarget.match(/(?:videos\/|v=|watch\/\?v=)?(\d{10,20})/)?.[1] || rawTarget;
     activeFbUrl = `https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fwatch%2F%3Fv%3D${fbVideoId}&show_text=0&autoplay=1`;
     externalUrl = `https://www.facebook.com/watch/?v=${fbVideoId}`;
-  } else if (rawTarget.endsWith(".mp4") || rawTarget.endsWith(".webm")) {
+  } else if (rawTarget && (rawTarget.endsWith(".mp4") || rawTarget.endsWith(".webm"))) {
     activePlatform = "direct";
     activeDirectUrl = rawTarget;
     externalUrl = rawTarget;
   } else if (rawTarget) {
     activePlatform = "youtube";
-    // Extract 11-char YouTube ID if a full URL was provided
     const match = rawTarget.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([0-9A-Za-z_-]{11})/);
     activeYtId = match ? match[1] : rawTarget;
     externalUrl = `https://www.youtube.com/watch?v=${activeYtId}`;
   }
 
-  // Initialize Players when modal opens
+  // Send command to YouTube iframe via postMessage
+  const postToYT = useCallback((func: string, args: any[] = []) => {
+    if (ytIframeRef.current && ytIframeRef.current.contentWindow) {
+      ytIframeRef.current.contentWindow.postMessage(
+        JSON.stringify({ event: "command", func, args }),
+        "*"
+      );
+    }
+  }, []);
+
+  // Tell YouTube iframe to start listening and sending timecode updates
+  useEffect(() => {
+    if (!isOpen || activePlatform !== "youtube") return;
+    const timer = setInterval(() => {
+      postToYT("listening");
+    }, 500);
+    return () => clearInterval(timer);
+  }, [isOpen, activePlatform, postToYT]);
+
+  // Listen to postMessage from YouTube iframe
+  useEffect(() => {
+    if (!isOpen || activePlatform !== "youtube") return;
+
+    const onMessage = (event: MessageEvent) => {
+      try {
+        const data = typeof event.data === "string" ? JSON.parse(event.data) : event.data;
+        if (data && data.event === "infoDelivery" && data.info) {
+          if (typeof data.info.currentTime === "number") {
+            setCurrentTimeSec(data.info.currentTime);
+            setDisplayTime(formatTimecode(data.info.currentTime));
+          }
+          if (data.info.playerState === 1) {
+            setIsPlaying(true);
+          } else if (data.info.playerState === 2) {
+            setIsPlaying(false);
+          }
+        }
+      } catch (_) {}
+    };
+
+    window.addEventListener("message", onMessage);
+    return () => window.removeEventListener("message", onMessage);
+  }, [isOpen, activePlatform]);
+
+  // Initialize Vimeo when modal opens
   useEffect(() => {
     if (!isOpen) return;
     setIsReady(false);
-    setIsPlaying(false);
+    setIsPlaying(true);
 
-    let isSubscribed = true;
+    if (activePlatform === "vimeo" && activeVimeoId && vimeoContainerRef.current) {
+      vimeoContainerRef.current.innerHTML = "";
+      try {
+        const vPlayer = new VimeoPlayer(vimeoContainerRef.current, {
+          id: Number(activeVimeoId),
+          autoplay: true,
+          responsive: true,
+          controls: true,
+          title: false,
+          byline: false,
+        });
 
-    if (activePlatform === "youtube" && activeYtId) {
-      if (containerRef.current) {
-        // Embed YouTube directly via robust responsive iframe with JS API enabled
-        const iframe = document.createElement("iframe");
-        iframe.id = "yt-player-iframe";
-        iframe.src = `https://www.youtube-nocookie.com/embed/${activeYtId}?autoplay=1&enablejsapi=1&rel=0&modestbranding=1&origin=${encodeURIComponent(window.location.origin)}`;
-        iframe.className = "w-full h-full border-0";
-        iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-        iframe.allowFullscreen = true;
-        
-        containerRef.current.innerHTML = "";
-        containerRef.current.appendChild(iframe);
+        vimeoPlayerRef.current = vPlayer;
 
-        const initPlayer = () => {
-          if (!window.YT || !window.YT.Player) return;
-          try {
-            ytPlayerRef.current = new window.YT.Player(iframe, {
-              events: {
-                onReady: () => {
-                  if (isSubscribed) {
-                    setIsReady(true);
-                    setIsPlaying(true);
-                  }
-                },
-                onStateChange: (event: any) => {
-                  if (event.data === window.YT.PlayerState.PLAYING) {
-                    setIsPlaying(true);
-                  } else if (event.data === window.YT.PlayerState.PAUSED) {
-                    setIsPlaying(false);
-                  }
-                },
-              },
-            });
-          } catch (_) {}
-        };
+        vPlayer.ready().then(() => {
+          setIsReady(true);
+          setIsPlaying(true);
+        });
 
-        if (window.YT && window.YT.Player) {
-          initPlayer();
-        } else {
-          const existingScript = document.getElementById("yt-iframe-api");
-          if (!existingScript) {
-            const tag = document.createElement("script");
-            tag.id = "yt-iframe-api";
-            tag.src = "https://www.youtube.com/iframe_api";
-            document.body.appendChild(tag);
-          }
-          const prevCallback = window.onYouTubeIframeAPIReady;
-          window.onYouTubeIframeAPIReady = () => {
-            if (prevCallback) prevCallback();
-            initPlayer();
-          };
-        }
-      }
-    } else if (activePlatform === "vimeo" && activeVimeoId) {
-      if (containerRef.current) {
-        containerRef.current.innerHTML = "";
-        try {
-          const vPlayer = new VimeoPlayer(containerRef.current, {
-            id: Number(activeVimeoId),
-            autoplay: true,
-            responsive: true,
-            controls: true,
-            title: false,
-            byline: false,
-          });
-
-          vimeoPlayerRef.current = vPlayer;
-
-          vPlayer.ready().then(() => {
-            if (isSubscribed) {
-              setIsReady(true);
-              setIsPlaying(true);
-            }
-          });
-
-          vPlayer.on("play", () => setIsPlaying(true));
-          vPlayer.on("pause", () => setIsPlaying(false));
-          vPlayer.on("timeupdate", (data) => {
-            setDisplayTime(formatTimecode(data.seconds));
-          });
-        } catch (err) {
-          console.error("Vimeo init error:", err);
-        }
-      }
-    } else if (activePlatform === "facebook" && activeFbUrl) {
-      if (containerRef.current) {
-        containerRef.current.innerHTML = `<iframe src="${activeFbUrl}" class="w-full h-full border-0" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen="true"></iframe>`;
-      }
-    } else if (activePlatform === "direct" && activeDirectUrl) {
-      if (containerRef.current) {
-        containerRef.current.innerHTML = `<video src="${activeDirectUrl}" controls autoplay class="w-full h-full object-contain"></video>`;
+        vPlayer.on("play", () => setIsPlaying(true));
+        vPlayer.on("pause", () => setIsPlaying(false));
+        vPlayer.on("timeupdate", (data) => {
+          setCurrentTimeSec(data.seconds);
+          setDisplayTime(formatTimecode(data.seconds));
+        });
+      } catch (err) {
+        console.error("Vimeo init error:", err);
       }
     }
 
-    // Interval to poll YouTube timecode smoothly
-    const interval = setInterval(() => {
-      if (activePlatform === "youtube" && ytPlayerRef.current && typeof ytPlayerRef.current.getCurrentTime === "function") {
-        try {
-          const t = ytPlayerRef.current.getCurrentTime();
-          setDisplayTime(formatTimecode(t));
-        } catch (_) {}
-      }
-    }, 100);
-
     return () => {
-      isSubscribed = false;
-      clearInterval(interval);
-      if (ytPlayerRef.current && typeof ytPlayerRef.current.destroy === "function") {
-        try { ytPlayerRef.current.destroy(); } catch (_) {}
-        ytPlayerRef.current = null;
-      }
       if (vimeoPlayerRef.current) {
         try { vimeoPlayerRef.current.destroy(); } catch (_) {}
         vimeoPlayerRef.current = null;
       }
     };
-  }, [isOpen, activePlatform, activeYtId, activeVimeoId]);
+  }, [isOpen, activePlatform, activeVimeoId]);
 
-  // Real Frame-by-Frame step starting FROM CURRENT TIME
+  // Frame-by-Frame step starting from current time
   const stepFrame = useCallback((direction: "forward" | "backward") => {
     const delta = direction === "forward" ? FRAME_STEP : -FRAME_STEP;
 
-    if (activePlatform === "youtube" && ytPlayerRef.current) {
-      try {
-        const curTime = ytPlayerRef.current.getCurrentTime() || 0;
-        const targetTime = Math.max(0, curTime + delta);
-        ytPlayerRef.current.pauseVideo();
-        setIsPlaying(false);
-        ytPlayerRef.current.seekTo(targetTime, true);
-        setDisplayTime(formatTimecode(targetTime));
-      } catch (e) {
-        console.error(e);
-      }
+    if (activePlatform === "youtube") {
+      const nextTime = Math.max(0, currentTimeSec + delta);
+      postToYT("pauseVideo");
+      postToYT("seekTo", [nextTime, true]);
+      setCurrentTimeSec(nextTime);
+      setDisplayTime(formatTimecode(nextTime));
+      setIsPlaying(false);
     } else if (activePlatform === "vimeo" && vimeoPlayerRef.current) {
       vimeoPlayerRef.current.pause().then(() => {
         setIsPlaying(false);
         return vimeoPlayerRef.current!.getCurrentTime();
       }).then((curTime) => {
         const targetTime = Math.max(0, curTime + delta);
+        setCurrentTimeSec(targetTime);
         setDisplayTime(formatTimecode(targetTime));
         return vimeoPlayerRef.current!.setCurrentTime(targetTime);
       }).catch(console.error);
+    } else if (activePlatform === "direct" && directVideoRef.current) {
+      const v = directVideoRef.current;
+      v.pause();
+      v.currentTime = Math.max(0, v.currentTime + delta);
+      setCurrentTimeSec(v.currentTime);
+      setDisplayTime(formatTimecode(v.currentTime));
+      setIsPlaying(false);
     }
-  }, [activePlatform, FRAME_STEP]);
+  }, [activePlatform, currentTimeSec, FRAME_STEP, postToYT]);
 
   const togglePlay = useCallback(() => {
-    if (activePlatform === "youtube" && ytPlayerRef.current) {
-      try {
-        if (isPlaying) {
-          ytPlayerRef.current.pauseVideo();
-          setIsPlaying(false);
-        } else {
-          ytPlayerRef.current.playVideo();
-          setIsPlaying(true);
-        }
-      } catch (e) { console.error(e); }
+    if (activePlatform === "youtube") {
+      if (isPlaying) {
+        postToYT("pauseVideo");
+        setIsPlaying(false);
+      } else {
+        postToYT("playVideo");
+        setIsPlaying(true);
+      }
     } else if (activePlatform === "vimeo" && vimeoPlayerRef.current) {
       if (isPlaying) {
         vimeoPlayerRef.current.pause().then(() => setIsPlaying(false));
       } else {
         vimeoPlayerRef.current.play().then(() => setIsPlaying(true));
       }
+    } else if (activePlatform === "direct" && directVideoRef.current) {
+      const v = directVideoRef.current;
+      if (v.paused) {
+        v.play();
+        setIsPlaying(true);
+      } else {
+        v.pause();
+        setIsPlaying(false);
+      }
     }
-  }, [activePlatform, isPlaying]);
+  }, [activePlatform, isPlaying, postToYT]);
 
   // Global keyboard shortcuts (avoiding iframe focus trap)
   useEffect(() => {
@@ -335,28 +309,32 @@ export function ReelModal({ isOpen, onClose, youtubeId, vimeoId, videoUrl, title
         <div className="relative w-full aspect-video bg-black flex items-center justify-center overflow-hidden">
           {activePlatform === "youtube" && activeYtId ? (
             <iframe
+              ref={ytIframeRef}
               id="yt-player-iframe"
-              src={`https://www.youtube-nocookie.com/embed/${activeYtId}?autoplay=1&enablejsapi=1&rel=0&modestbranding=1`}
+              src={`https://www.youtube.com/embed/${activeYtId}?autoplay=1&enablejsapi=1&rel=0&modestbranding=1&origin=${encodeURIComponent(typeof window !== "undefined" ? window.location.origin : "")}`}
               className="w-full h-full border-0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
             />
           ) : activePlatform === "facebook" && activeFbUrl ? (
-            <iframe
-              src={activeFbUrl}
-              className="w-full h-full border-0"
-              allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-              allowFullScreen
-            />
+            <div className="w-full h-full relative flex items-center justify-center bg-neutral-950">
+              <iframe
+                src={activeFbUrl}
+                className="w-full h-full border-0"
+                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            </div>
           ) : activePlatform === "direct" && activeDirectUrl ? (
             <video
+              ref={directVideoRef}
               src={activeDirectUrl}
               controls
               autoPlay
               className="w-full h-full object-contain"
             />
           ) : (
-            <div ref={containerRef} className="w-full h-full" />
+            <div ref={vimeoContainerRef} className="w-full h-full" />
           )}
         </div>
 
@@ -367,7 +345,7 @@ export function ReelModal({ isOpen, onClose, youtubeId, vimeoId, videoUrl, title
             <button
               onClick={() => stepFrame("backward")}
               title="Step -1 Frame (, or Left Arrow)"
-              className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-neutral-800 hover:bg-neutral-700 text-neutral-200 hover:text-white text-xs font-mono transition-all border border-neutral-700 active:scale-95 shadow"
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-neutral-800 hover:bg-neutral-700 text-neutral-200 hover:text-white text-xs font-mono transition-all border border-neutral-700 active:scale-95 shadow cursor-pointer"
             >
               <StepBack className="w-3.5 h-3.5 text-cyan-400" />
               <span>-1 FRAME</span>
@@ -376,7 +354,7 @@ export function ReelModal({ isOpen, onClose, youtubeId, vimeoId, videoUrl, title
             <button
               onClick={togglePlay}
               title="Play / Pause (Space)"
-              className="flex items-center justify-center w-10 h-10 rounded-lg bg-white text-black hover:bg-neutral-200 transition-all shadow-md active:scale-95 font-bold"
+              className="flex items-center justify-center w-10 h-10 rounded-lg bg-white text-black hover:bg-neutral-200 transition-all shadow-md active:scale-95 font-bold cursor-pointer"
             >
               {isPlaying ? <Pause className="w-4 h-4 fill-current" /> : <Play className="w-4 h-4 fill-current ml-0.5" />}
             </button>
@@ -384,7 +362,7 @@ export function ReelModal({ isOpen, onClose, youtubeId, vimeoId, videoUrl, title
             <button
               onClick={() => stepFrame("forward")}
               title="Step +1 Frame (. or Right Arrow)"
-              className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-neutral-800 hover:bg-neutral-700 text-neutral-200 hover:text-white text-xs font-mono transition-all border border-neutral-700 active:scale-95 shadow"
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-neutral-800 hover:bg-neutral-700 text-neutral-200 hover:text-white text-xs font-mono transition-all border border-neutral-700 active:scale-95 shadow cursor-pointer"
             >
               <span>+1 FRAME</span>
               <StepForward className="w-3.5 h-3.5 text-cyan-400" />

@@ -11,7 +11,7 @@ export function StudioSpecs() {
   const isPt = lang === "pt";
 
   return (
-    <section id="breakdown" className="py-28 border-t border-neutral-900/80 bg-black/40 relative overflow-hidden">
+    <section id="breakdown" className="py-28 border-t border-neutral-900/80 bg-black/40 relative overflow-hidden"><div id="pipeline" className="absolute top-1/2 pointer-events-none" />
       {/* Cosmic Nebula Glows */}
       <div className="absolute top-1/3 right-0 w-[600px] h-[400px] bg-cyan-900/15 rounded-full blur-[150px] pointer-events-none" />
       <div className="absolute bottom-10 left-0 w-[550px] h-[350px] bg-purple-900/20 rounded-full blur-[150px] pointer-events-none" />

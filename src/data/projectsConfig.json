@@ -21,8 +21,8 @@
       "ano": "2026",
       "autoplayMedia": "/projects/mp4/tiktok-awards.mp4",
       "videoCompleto": {
-        "tipo": "vimeo",
-        "urlOuId": "963383257"
+        "tipo": "none",
+        "urlOuId": ""
       }
     },
     {
@@ -46,7 +46,7 @@
       "autoplayMedia": "/projects/mp4/topps-wwe.mp4",
       "videoCompleto": {
         "tipo": "facebook",
-        "urlOuId": "2357893864695344"
+        "urlOuId": "https://www.facebook.com/watch/?v=2357893864695344"
       }
     },
     {
@@ -57,8 +57,8 @@
       "ano": "2024",
       "autoplayMedia": "/projects/disney-solitaire.gif",
       "videoCompleto": {
-        "tipo": "vimeo",
-        "urlOuId": "963383257"
+        "tipo": "youtube",
+        "urlOuId": "V9G5eT3HVMc"
       }
     },
     {
@@ -69,8 +69,8 @@
       "ano": "2024",
       "autoplayMedia": "/projects/coca-cola.gif",
       "videoCompleto": {
-        "tipo": "vimeo",
-        "urlOuId": "963383257"
+        "tipo": "youtube",
+        "urlOuId": "Yy6fByUmPuE"
       }
     },
     {
@@ -81,8 +81,8 @@
       "ano": "2024",
       "autoplayMedia": "/projects/hyundai-creta.gif",
       "videoCompleto": {
-        "tipo": "youtube",
-        "urlOuId": "YTH5TMSUSeM"
+        "tipo": "none",
+        "urlOuId": ""
       }
     },
     {

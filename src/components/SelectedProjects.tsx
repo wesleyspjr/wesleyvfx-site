@@ -44,12 +44,26 @@ export function SelectedProjects() {
             key={project.id}
             data-cursor="play"
             onClick={() => {
-              setSelectedVideo({
-                youtubeId: project.youtubeId,
-                vimeoId: project.vimeoId,
-                videoUrl: project.videoUrl,
-                title: `${project.client} — ${project.title}`,
-              });
+              // Se tiver youtubeId, vimeoId ou vídeo MP4, abre no modal
+              const targetVideo = project.youtubeId || project.vimeoId 
+                ? {
+                    youtubeId: project.youtubeId,
+                    vimeoId: project.vimeoId,
+                    videoUrl: undefined,
+                    title: `${project.client} — ${project.title}`,
+                  }
+                : project.previewMedia?.endsWith(".mp4")
+                ? {
+                    youtubeId: undefined,
+                    vimeoId: undefined,
+                    videoUrl: project.previewMedia,
+                    title: `${project.client} — ${project.title} (Breakdown Preview)`,
+                  }
+                : null;
+
+              if (targetVideo) {
+                setSelectedVideo(targetVideo);
+              }
             }}
             className="group relative w-full aspect-video overflow-hidden bg-neutral-950 rounded-2xl cursor-pointer shadow-2xl border border-white/10 hover:border-purple-500/60 transition-all duration-300"
           >
