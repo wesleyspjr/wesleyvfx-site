@@ -333,7 +333,31 @@ export function ReelModal({ isOpen, onClose, youtubeId, vimeoId, videoUrl, title
 
         {/* Video Player Container */}
         <div className="relative w-full aspect-video bg-black flex items-center justify-center overflow-hidden">
-          <div ref={containerRef} className="w-full h-full" />
+          {activePlatform === "youtube" && activeYtId ? (
+            <iframe
+              id="yt-player-iframe"
+              src={`https://www.youtube-nocookie.com/embed/${activeYtId}?autoplay=1&enablejsapi=1&rel=0&modestbranding=1`}
+              className="w-full h-full border-0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            />
+          ) : activePlatform === "facebook" && activeFbUrl ? (
+            <iframe
+              src={activeFbUrl}
+              className="w-full h-full border-0"
+              allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+              allowFullScreen
+            />
+          ) : activePlatform === "direct" && activeDirectUrl ? (
+            <video
+              src={activeDirectUrl}
+              controls
+              autoPlay
+              className="w-full h-full object-contain"
+            />
+          ) : (
+            <div ref={containerRef} className="w-full h-full" />
+          )}
         </div>
 
         {/* Studio VFX Transport & Frame-by-Frame Controls Deck */}
