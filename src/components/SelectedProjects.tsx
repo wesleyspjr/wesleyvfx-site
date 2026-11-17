@@ -6,6 +6,78 @@ import { useLanguage } from "@/context/LanguageContext";
 import { Play } from "lucide-react";
 import { ReelModal } from "./ReelModal";
 
+function ProjectVideo({ src }: { src: string }) {
+  const videoRef = React.useRef<HTMLVideoElement>(null);
+
+  React.useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    // Força muted via propriedade do DOM para evitar restrições do navegador
+    video.muted = true;
+    video.defaultMuted = true;
+
+    const playVideo = () => {
+      if (video.paused) {
+        const p = video.play();
+        if (p !== undefined) {
+          p.catch(() => {});
+        }
+      }
+    };
+
+    // Tenta dar play imediatamente
+    playVideo();
+
+    // Loop explícito à prova de falhas: se terminar ou pausar, retoma
+    const handleEnded = () => {
+      video.currentTime = 0;
+      playVideo();
+    };
+
+    const handlePause = () => {
+      // Se pausar inesperadamente pelo browser, retoma
+      playVideo();
+    };
+
+    video.addEventListener("ended", handleEnded);
+    video.addEventListener("pause", handlePause);
+
+    // IntersectionObserver para pausar fora de tela e dar play garantido ao entrar na tela
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            playVideo();
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(video);
+
+    return () => {
+      video.removeEventListener("ended", handleEnded);
+      video.removeEventListener("pause", handlePause);
+      observer.disconnect();
+    };
+  }, [src]);
+
+  return (
+    <video
+      ref={videoRef}
+      src={src}
+      autoPlay
+      loop
+      muted
+      playsInline
+      preload="auto"
+      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 pointer-events-none"
+    />
+  );
+}
+
 export function SelectedProjects() {
   const [selectedVideo, setSelectedVideo] = useState<{
     youtubeId?: string;
@@ -71,22 +143,7 @@ export function SelectedProjects() {
           >
             {/* Autoplay Clean Media Loop (16:9 Full Frame) */}
             {project.previewMedia?.endsWith(".mp4") || project.videoUrl ? (
-              <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="auto"
-                ref={(el) => {
-                  if (el && el.paused) {
-                    el.muted = true;
-                    el.play().catch(() => {});
-                  }
-                }}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 pointer-events-none"
-              >
-                <source src={project.videoUrl || project.previewMedia} type="video/mp4" />
-              </video>
+              <ProjectVideo src={project.videoUrl || project.previewMedia} />
             ) : (
               <img
                 src={project.previewMedia || project.gifUrl}
