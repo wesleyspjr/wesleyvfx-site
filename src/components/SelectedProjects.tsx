@@ -8,8 +8,9 @@ import { ReelModal } from "./ReelModal";
 
 export function SelectedProjects() {
   const [selectedVideo, setSelectedVideo] = useState<{
-    id?: string;
+    youtubeId?: string;
     vimeoId?: string;
+    videoUrl?: string;
     title: string;
   } | null>(null);
 
@@ -44,8 +45,9 @@ export function SelectedProjects() {
             data-cursor="play"
             onClick={() => {
               setSelectedVideo({
-                id: project.youtubeId,
+                youtubeId: project.youtubeId,
                 vimeoId: project.vimeoId,
+                videoUrl: project.videoUrl,
                 title: `${project.client} — ${project.title}`,
               });
             }}
@@ -104,8 +106,9 @@ export function SelectedProjects() {
         <ReelModal
           isOpen={!!selectedVideo}
           onClose={() => setSelectedVideo(null)}
-          youtubeId={selectedVideo.id}
+          youtubeId={selectedVideo.youtubeId}
           vimeoId={selectedVideo.vimeoId}
+          videoUrl={selectedVideo.videoUrl}
           title={selectedVideo.title}
         />
       )}
