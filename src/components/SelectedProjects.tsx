@@ -59,6 +59,12 @@ export function SelectedProjects() {
                 muted
                 playsInline
                 preload="auto"
+                ref={(el) => {
+                  if (el && el.paused) {
+                    el.muted = true;
+                    el.play().catch(() => {});
+                  }
+                }}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 pointer-events-none"
               >
                 <source src={project.videoUrl || project.previewMedia} type="video/mp4" />
