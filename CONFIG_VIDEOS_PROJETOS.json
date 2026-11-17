@@ -1,0 +1,113 @@
+{
+  "_instrucoes": "Edite este arquivo para alterar os vídeos de autoplay ou os vídeos completos (YouTube/Vimeo) de cada projeto. Basta alterar o link ou caminho e salvar.",
+  "projetos": [
+    {
+      "id": "mrbeast",
+      "cliente": "MrBeast",
+      "titulo": "Special Production & VFX",
+      "categoria": "VFX Compositing",
+      "ano": "2026",
+      "autoplayMedia": "/projects/mp4/mrbeast.mp4",
+      "videoCompleto": {
+        "tipo": "youtube",
+        "urlOuId": "YTH5TMSUSeM"
+      }
+    },
+    {
+      "id": "tiktok-awards",
+      "cliente": "TikTok Awards",
+      "titulo": "Creator Ceremony Graphics & Screen Visuals",
+      "categoria": "Motion Design",
+      "ano": "2026",
+      "autoplayMedia": "/projects/mp4/tiktok-awards.mp4",
+      "videoCompleto": {
+        "tipo": "vimeo",
+        "urlOuId": "963383257"
+      }
+    },
+    {
+      "id": "actionvfx-contest",
+      "cliente": "Action VFX Contest",
+      "titulo": "Action VFX Sequence",
+      "categoria": "VFX Compositing",
+      "ano": "2024",
+      "autoplayMedia": "/projects/actionvfx-contest.gif",
+      "videoCompleto": {
+        "tipo": "youtube",
+        "urlOuId": "YTH5TMSUSeM"
+      }
+    },
+    {
+      "id": "topps-wwe",
+      "cliente": "TOPPS / WWE",
+      "titulo": "TOPPS WWE Collector Motion Reveal",
+      "categoria": "Motion Design",
+      "ano": "2026",
+      "autoplayMedia": "/projects/mp4/topps-wwe.mp4",
+      "videoCompleto": {
+        "tipo": "vimeo",
+        "urlOuId": "963383257"
+      }
+    },
+    {
+      "id": "disney-solitaire",
+      "cliente": "Disney",
+      "titulo": "Play. Tap. Escape.",
+      "categoria": "Motion Design",
+      "ano": "2024",
+      "autoplayMedia": "/projects/disney-solitaire.gif",
+      "videoCompleto": {
+        "tipo": "vimeo",
+        "urlOuId": "963383257"
+      }
+    },
+    {
+      "id": "coca-cola",
+      "cliente": "Coca-Cola",
+      "titulo": "Holidays Are Coming",
+      "categoria": "Commercial",
+      "ano": "2024",
+      "autoplayMedia": "/projects/coca-cola.gif",
+      "videoCompleto": {
+        "tipo": "vimeo",
+        "urlOuId": "963383257"
+      }
+    },
+    {
+      "id": "hyundai-creta",
+      "cliente": "Hyundai",
+      "titulo": "Automotive Reveal & Breakdown",
+      "categoria": "VFX Compositing",
+      "ano": "2024",
+      "autoplayMedia": "/projects/hyundai-creta.gif",
+      "videoCompleto": {
+        "tipo": "youtube",
+        "urlOuId": "YTH5TMSUSeM"
+      }
+    },
+    {
+      "id": "santander",
+      "cliente": "Santander",
+      "titulo": "Campanha Institucional",
+      "categoria": "VFX Compositing",
+      "ano": "2024",
+      "autoplayMedia": "/projects/santander.gif",
+      "videoCompleto": {
+        "tipo": "youtube",
+        "urlOuId": "YTH5TMSUSeM"
+      }
+    },
+    {
+      "id": "bic",
+      "cliente": "BIC",
+      "titulo": "Commercial Film & Product Motion",
+      "categoria": "Commercial",
+      "ano": "2023",
+      "autoplayMedia": "/projects/mp4/bic.mp4",
+      "videoCompleto": {
+        "tipo": "youtube",
+        "urlOuId": "YTH5TMSUSeM"
+      }
+    }
+  ]
+}

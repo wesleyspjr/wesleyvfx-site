@@ -1,3 +1,5 @@
+import projectsConfig from "./projectsConfig.json";
+
 export interface Project {
   id: string;
   title: string;
@@ -93,109 +95,20 @@ export const PROFILE = {
   },
 };
 
-// 9 Selected Works in exact requested order:
-// 1-MrBeast, 2-TikTok Awards, 3-Action VFX Contest, 4-TOPPS_WWE, 5-Disney, 6-Coca-Cola, 7-Hyundai, 8-Santander, 9-Bic
-export const PROJECTS: Project[] = [
-  {
-    id: "mrbeast",
-    title: "Special Production & VFX",
-    client: "MrBeast",
-    category: "VFX Compositing",
-    year: "2026",
-    tools: ["Nuke", "After Effects", "Tracking"],
-    gifUrl: "/projects/mrbeast.gif",
-    previewMedia: "/projects/mrbeast.gif",
-    youtubeId: "YTH5TMSUSeM",
-  },
-  {
-    id: "tiktok-awards",
-    title: "Creator Ceremony Graphics & Screen Visuals",
-    client: "TikTok Awards",
-    category: "Motion Design",
-    year: "2026",
-    tools: ["After Effects", "Cinema 4D", "Broadcast Motion"],
-    gifUrl: "/projects/tiktok-awards.gif",
-    previewMedia: "/projects/tiktok-awards.gif",
-    vimeoId: "963383257",
-  },
-  {
-    id: "actionvfx-contest",
-    title: "Action VFX Sequence",
-    client: "Action VFX Contest",
-    category: "VFX Compositing",
-    year: "2024",
-    tools: ["Nuke", "Deep Compositing", "Pyrotechnics"],
-    gifUrl: "/projects/actionvfx-contest.gif",
-    previewMedia: "/projects/actionvfx-contest.gif",
-    youtubeId: "YTH5TMSUSeM",
-  },
-  {
-    id: "topps-wwe",
-    title: "TOPPS WWE Collector Motion Reveal",
-    client: "TOPPS / WWE",
-    category: "Motion Design",
-    year: "2026",
-    tools: ["After Effects", "3D Spotlight", "Color Grade"],
-    gifUrl: "/projects/topps-wwe.gif",
-    previewMedia: "/projects/topps-wwe.gif",
-    vimeoId: "963383257",
-  },
-  {
-    id: "disney-solitaire",
-    title: "Play. Tap. Escape.",
-    client: "Disney",
-    category: "Motion Design",
-    year: "2024",
-    tools: ["After Effects", "Cinema 4D", "Sound Design"],
-    gifUrl: "/projects/disney-solitaire.gif",
-    previewMedia: "/projects/disney-solitaire.gif",
-    vimeoId: "963383257",
-  },
-  {
-    id: "coca-cola",
-    title: "Holidays Are Coming",
-    client: "Coca-Cola",
-    category: "Commercial",
-    year: "2024",
-    tools: ["After Effects", "Color Grading", "Particle FX"],
-    gifUrl: "/projects/coca-cola.gif",
-    previewMedia: "/projects/coca-cola.gif",
-    vimeoId: "963383257",
-  },
-  {
-    id: "hyundai-creta",
-    title: "Automotive Reveal & Breakdown",
-    client: "Hyundai",
-    category: "VFX Compositing",
-    year: "2024",
-    tools: ["Nuke", "3D Camera Projection", "CGI Multi-pass"],
-    gifUrl: "/projects/hyundai-creta.gif",
-    previewMedia: "/projects/hyundai-creta.gif",
-    youtubeId: "YTH5TMSUSeM",
-  },
-  {
-    id: "santander",
-    title: "Campanha Institucional",
-    client: "Santander",
-    category: "VFX Compositing",
-    year: "2024",
-    tools: ["Nuke", "After Effects", "Mocha Pro"],
-    gifUrl: "/projects/santander.gif",
-    previewMedia: "/projects/santander.gif",
-    youtubeId: "YTH5TMSUSeM",
-  },
-  {
-    id: "bic",
-    title: "Commercial Film & Product Motion",
-    client: "BIC",
-    category: "Commercial",
-    year: "2023",
-    tools: ["After Effects", "Compositing", "Cleanup"],
-    gifUrl: "/projects/bic.gif",
-    previewMedia: "/projects/bic.gif",
-    youtubeId: "YTH5TMSUSeM",
-  },
-];
+// 9 Selected Works loaded directly from projectsConfig.json:
+export const PROJECTS: Project[] = projectsConfig.projetos.map((p) => ({
+  id: p.id,
+  title: p.titulo,
+  client: p.cliente,
+  category: p.categoria as any,
+  year: p.ano,
+  tools: [],
+  previewMedia: p.autoplayMedia,
+  gifUrl: p.autoplayMedia,
+  videoUrl: p.autoplayMedia.endsWith(".mp4") ? p.autoplayMedia : undefined,
+  youtubeId: p.videoCompleto.tipo === "youtube" ? p.videoCompleto.urlOuId : undefined,
+  vimeoId: p.videoCompleto.tipo === "vimeo" ? p.videoCompleto.urlOuId : undefined,
+}));
 
 // Breakdown comparisons using user's actual local files in public/breakdowns/
 export const BREAKDOWN_COMPARISONS: Record<"greenscreen" | "cleanup", BreakdownPair> = {

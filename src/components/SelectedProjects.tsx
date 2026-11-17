@@ -58,7 +58,7 @@ export function SelectedProjects() {
                 loop
                 muted
                 playsInline
-                preload="metadata"
+                preload="auto"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 pointer-events-none"
               >
                 <source src={project.videoUrl || project.previewMedia} type="video/mp4" />
