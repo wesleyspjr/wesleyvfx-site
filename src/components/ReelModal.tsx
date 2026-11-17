@@ -13,6 +13,7 @@ interface ReelModalProps {
   youtubeId?: string;
   vimeoId?: string;
   title: string;
+  showControlsDeck?: boolean;
 }
 
 declare global {
@@ -22,7 +23,7 @@ declare global {
   }
 }
 
-export function ReelModal({ isOpen, onClose, youtubeId, vimeoId, videoUrl, title }: ReelModalProps) {
+export function ReelModal({ isOpen, onClose, youtubeId, vimeoId, videoUrl, title, showControlsDeck = true }: ReelModalProps) {
   const { lang } = useLanguage();
   const isPt = lang === "pt";
 
@@ -388,7 +389,8 @@ export function ReelModal({ isOpen, onClose, youtubeId, vimeoId, videoUrl, title
           )}
         </div>
 
-        {/* Studio VFX Transport & Frame-by-Frame Controls Deck */}
+        {/* Studio VFX Transport & Frame-by-Frame Controls Deck (Reels only) */}
+        {showControlsDeck && (
         <div className="p-4 sm:p-5 bg-neutral-900/90 border-t border-neutral-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           {/* Left: Step Buttons & Timecode */}
           <div className="flex items-center gap-2 sm:gap-3">
@@ -441,6 +443,7 @@ export function ReelModal({ isOpen, onClose, youtubeId, vimeoId, videoUrl, title
             </span>
           </div>
         </div>
+        )}
       </div>
     </div>,
     document.body

@@ -149,6 +149,7 @@ export function Hero() {
         youtubeId={activeReel.youtubeId}
         vimeoId={activeReel.vimeoId}
         title={activeReel.title}
+        showControlsDeck={true}
       />
     </section>
   );

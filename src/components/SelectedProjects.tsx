@@ -126,6 +126,7 @@ export function SelectedProjects() {
           vimeoId={selectedVideo.vimeoId}
           videoUrl={selectedVideo.videoUrl}
           title={selectedVideo.title}
+          showControlsDeck={false}
         />
       )}
     </section>
