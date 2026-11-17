@@ -35,6 +35,7 @@ export function ReelModal({ isOpen, onClose, youtubeId, vimeoId, videoUrl, title
   const [displayTime, setDisplayTime] = useState("00:00:00:00");
   const [isReady, setIsReady] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const lastKnownTimeRef = useRef(0);
 
   useEffect(() => {
     setMounted(true);
@@ -95,16 +96,19 @@ export function ReelModal({ isOpen, onClose, youtubeId, vimeoId, videoUrl, title
     let isSubscribed = true;
 
     const initYT = () => {
-      const iframe = document.getElementById("yt-player-iframe");
+      const iframe = document.getElementById("yt-player-iframe") as HTMLIFrameElement | null;
       if (!iframe || !window.YT || !window.YT.Player) return;
 
       try {
-        ytPlayerRef.current = new window.YT.Player("yt-player-iframe", {
+        ytPlayerRef.current = new window.YT.Player(iframe, {
           events: {
-            onReady: () => {
+            onReady: (event: any) => {
               if (isSubscribed) {
                 setIsReady(true);
                 setIsPlaying(true);
+                try {
+                  event.target.playVideo();
+                } catch (_) {}
               }
             },
             onStateChange: (event: any) => {
@@ -136,17 +140,18 @@ export function ReelModal({ isOpen, onClose, youtubeId, vimeoId, videoUrl, title
       };
     }
 
-    // Timecode polling
+    // Timecode polling & sync
     const timer = setInterval(() => {
       if (ytPlayerRef.current && typeof ytPlayerRef.current.getCurrentTime === "function") {
         try {
           const t = ytPlayerRef.current.getCurrentTime();
-          if (typeof t === "number") {
+          if (typeof t === "number" && !isNaN(t) && t > 0) {
+            lastKnownTimeRef.current = t;
             setDisplayTime(formatTimecode(t));
           }
         } catch (_) {}
       }
-    }, 150);
+    }, 100);
 
     return () => {
       isSubscribed = false;
@@ -203,12 +208,33 @@ export function ReelModal({ isOpen, onClose, youtubeId, vimeoId, videoUrl, title
   const stepFrame = useCallback((direction: "forward" | "backward") => {
     const delta = direction === "forward" ? FRAME_STEP : -FRAME_STEP;
 
-    if (activePlatform === "youtube" && ytPlayerRef.current && typeof ytPlayerRef.current.getCurrentTime === "function") {
+    if (activePlatform === "youtube") {
       try {
-        const curTime = ytPlayerRef.current.getCurrentTime() || 0;
+        let curTime = 0;
+        if (ytPlayerRef.current && typeof ytPlayerRef.current.getCurrentTime === "function") {
+          const apiTime = ytPlayerRef.current.getCurrentTime();
+          if (typeof apiTime === "number" && !isNaN(apiTime) && apiTime > 0) {
+            curTime = apiTime;
+          }
+        }
+        if (curTime === 0 && lastKnownTimeRef.current > 0) {
+          curTime = lastKnownTimeRef.current;
+        }
+
         const targetTime = Math.max(0, curTime + delta);
-        ytPlayerRef.current.pauseVideo();
-        ytPlayerRef.current.seekTo(targetTime, true);
+        lastKnownTimeRef.current = targetTime;
+
+        if (ytPlayerRef.current && typeof ytPlayerRef.current.seekTo === "function") {
+          ytPlayerRef.current.pauseVideo();
+          ytPlayerRef.current.seekTo(targetTime, true);
+        } else {
+          // Fallback via postMessage
+          const iframe = document.getElementById("yt-player-iframe") as HTMLIFrameElement | null;
+          if (iframe && iframe.contentWindow) {
+            iframe.contentWindow.postMessage(JSON.stringify({ event: "command", func: "pauseVideo", args: [] }), "*");
+            iframe.contentWindow.postMessage(JSON.stringify({ event: "command", func: "seekTo", args: [targetTime, true] }), "*");
+          }
+        }
         setDisplayTime(formatTimecode(targetTime));
         setIsPlaying(false);
       } catch (e) {
