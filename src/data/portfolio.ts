@@ -5,7 +5,9 @@ export interface Project {
   category: "VFX Compositing" | "Motion Design" | "Commercial" | "3D & Cleanup";
   year: string;
   tools: string[];
-  gifUrl: string; // Original gif from Wix
+  gifUrl?: string;
+  videoUrl?: string; // Local MP4 loop
+  previewMedia: string; // Active autoplay preview (GIF or MP4)
   youtubeId?: string;
   vimeoId?: string;
 }
@@ -67,7 +69,7 @@ export const PROFILE = {
       { name: "Vimeo", url: "https://vimeo.com/user203058658", handle: "Wesley Junior" },
       { name: "YouTube", url: "https://www.youtube.com/@DarkStorm131", handle: "@DarkStorm131" },
     ],
-    resumePdf: "https://www.wesleyvfx.com.br/_files/ugd/8b4d3c_8506cf042c9d40289d02f1d7957b2bab.pdf",
+    resumePdf: "/docs/Wesley_Junior_Resume.pdf",
   },
   reels: {
     compositing: {
@@ -101,7 +103,8 @@ export const PROJECTS: Project[] = [
     category: "VFX Compositing",
     year: "2026",
     tools: ["Nuke", "After Effects", "Tracking"],
-    gifUrl: "https://static.wixstatic.com/media/8b4d3c_9101cb6052464d8c8f6dfab947da805c~mv2.gif",
+    gifUrl: "/projects/mrbeast.gif",
+    previewMedia: "/projects/mrbeast.gif",
     youtubeId: "YTH5TMSUSeM",
   },
   {
@@ -111,7 +114,8 @@ export const PROJECTS: Project[] = [
     category: "Motion Design",
     year: "2026",
     tools: ["After Effects", "Cinema 4D", "Broadcast Motion"],
-    gifUrl: "https://static.wixstatic.com/media/8b4d3c_c5b7c3964d524cc988ef24c18f2e8661~mv2.gif",
+    gifUrl: "/projects/tiktok-awards.gif",
+    previewMedia: "/projects/tiktok-awards.gif",
     vimeoId: "963383257",
   },
   {
@@ -121,7 +125,8 @@ export const PROJECTS: Project[] = [
     category: "VFX Compositing",
     year: "2024",
     tools: ["Nuke", "Deep Compositing", "Pyrotechnics"],
-    gifUrl: "https://static.wixstatic.com/media/8b4d3c_6a7ba1e0b5c64d5b84bcf7b707e78c46~mv2.gif",
+    gifUrl: "/projects/actionvfx-contest.gif",
+    previewMedia: "/projects/actionvfx-contest.gif",
     youtubeId: "YTH5TMSUSeM",
   },
   {
@@ -131,7 +136,8 @@ export const PROJECTS: Project[] = [
     category: "Motion Design",
     year: "2026",
     tools: ["After Effects", "3D Spotlight", "Color Grade"],
-    gifUrl: "https://static.wixstatic.com/media/8b4d3c_aa5ab5f8657748aea12e59084f209757~mv2.gif",
+    gifUrl: "/projects/topps-wwe.gif",
+    previewMedia: "/projects/topps-wwe.gif",
     vimeoId: "963383257",
   },
   {
@@ -141,7 +147,8 @@ export const PROJECTS: Project[] = [
     category: "Motion Design",
     year: "2024",
     tools: ["After Effects", "Cinema 4D", "Sound Design"],
-    gifUrl: "https://static.wixstatic.com/media/8b4d3c_d11c2ccce0744136ab7e684dfc3aef2c~mv2.gif",
+    gifUrl: "/projects/disney-solitaire.gif",
+    previewMedia: "/projects/disney-solitaire.gif",
     vimeoId: "963383257",
   },
   {
@@ -151,7 +158,8 @@ export const PROJECTS: Project[] = [
     category: "Commercial",
     year: "2024",
     tools: ["After Effects", "Color Grading", "Particle FX"],
-    gifUrl: "https://static.wixstatic.com/media/8b4d3c_9382a1c18b1247819ad394ccafbbcfc9~mv2.gif",
+    gifUrl: "/projects/coca-cola.gif",
+    previewMedia: "/projects/coca-cola.gif",
     vimeoId: "963383257",
   },
   {
@@ -161,7 +169,8 @@ export const PROJECTS: Project[] = [
     category: "VFX Compositing",
     year: "2024",
     tools: ["Nuke", "3D Camera Projection", "CGI Multi-pass"],
-    gifUrl: "https://static.wixstatic.com/media/8b4d3c_d68b5a7c10304364b23646500771b184~mv2.gif",
+    gifUrl: "/projects/hyundai-creta.gif",
+    previewMedia: "/projects/hyundai-creta.gif",
     youtubeId: "YTH5TMSUSeM",
   },
   {
@@ -171,7 +180,8 @@ export const PROJECTS: Project[] = [
     category: "VFX Compositing",
     year: "2024",
     tools: ["Nuke", "After Effects", "Mocha Pro"],
-    gifUrl: "https://static.wixstatic.com/media/8b4d3c_4344250d0ce246a8853fa5f3b06b9f34~mv2.gif",
+    gifUrl: "/projects/santander.gif",
+    previewMedia: "/projects/santander.gif",
     youtubeId: "YTH5TMSUSeM",
   },
   {
@@ -181,7 +191,8 @@ export const PROJECTS: Project[] = [
     category: "Commercial",
     year: "2023",
     tools: ["After Effects", "Compositing", "Cleanup"],
-    gifUrl: "https://static.wixstatic.com/media/8b4d3c_d8168368d2c24a18ad3a5ad51fe8f83d~mv2.gif",
+    gifUrl: "/projects/bic.gif",
+    previewMedia: "/projects/bic.gif",
     youtubeId: "YTH5TMSUSeM",
   },
 ];

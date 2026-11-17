@@ -52,12 +52,25 @@ export function SelectedProjects() {
             className="group relative w-full aspect-video overflow-hidden bg-neutral-950 rounded-2xl cursor-pointer shadow-2xl border border-white/10 hover:border-purple-500/60 transition-all duration-300"
           >
             {/* Autoplay Clean Media Loop (16:9 Full Frame) */}
-            <img
-              src={project.gifUrl}
-              alt={project.title}
-              loading="lazy"
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            />
+            {project.previewMedia?.endsWith(".mp4") || project.videoUrl ? (
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="metadata"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 pointer-events-none"
+              >
+                <source src={project.videoUrl || project.previewMedia} type="video/mp4" />
+              </video>
+            ) : (
+              <img
+                src={project.previewMedia || project.gifUrl}
+                alt={project.title}
+                loading="lazy"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+            )}
 
             {/* FULL 16:9 HOVER OVERLAY - COVERS THE ENTIRE IMAGE AS REQUESTED */}
             <div className="absolute inset-0 bg-black/85 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col justify-center items-center text-center p-6 z-10">
