@@ -10,7 +10,7 @@
       "autoplayMedia": "/projects/mp4/mrbeast.mp4",
       "videoCompleto": {
         "tipo": "youtube",
-        "urlOuId": "YTH5TMSUSeM"
+        "urlOuId": "q6fgVVmdpgY"
       }
     },
     {
@@ -34,7 +34,7 @@
       "autoplayMedia": "/projects/actionvfx-contest.gif",
       "videoCompleto": {
         "tipo": "youtube",
-        "urlOuId": "YTH5TMSUSeM"
+        "urlOuId": "Y_dnL8UL1XQ"
       }
     },
     {
@@ -45,8 +45,8 @@
       "ano": "2026",
       "autoplayMedia": "/projects/mp4/topps-wwe.mp4",
       "videoCompleto": {
-        "tipo": "vimeo",
-        "urlOuId": "963383257"
+        "tipo": "facebook",
+        "urlOuId": "2357893864695344"
       }
     },
     {
@@ -94,7 +94,7 @@
       "autoplayMedia": "/projects/santander.gif",
       "videoCompleto": {
         "tipo": "youtube",
-        "urlOuId": "YTH5TMSUSeM"
+        "urlOuId": "Ote7w_ry07U"
       }
     },
     {
@@ -106,7 +106,7 @@
       "autoplayMedia": "/projects/mp4/bic.mp4",
       "videoCompleto": {
         "tipo": "youtube",
-        "urlOuId": "YTH5TMSUSeM"
+        "urlOuId": "XtluI41Nweo"
       }
     }
   ]
