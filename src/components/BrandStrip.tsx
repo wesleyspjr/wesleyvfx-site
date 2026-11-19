@@ -177,7 +177,7 @@ export function BrandStrip() {
               className="group flex flex-col items-center justify-center gap-2 flex-shrink-0"
             >
               {/* 2X LARGER SQUARE CARD */}
-              <div className="w-28 h-28 sm:w-32 sm:h-32 aspect-square rounded-2xl bg-white/[0.04] border border-white/10 hover:border-purple-500/50 flex items-center justify-center p-4 transition-all duration-300 shadow-xl group-hover:bg-white/[0.08] group-hover:scale-105 pointer-events-none">
+              <div className="w-28 h-28 sm:w-32 sm:h-32 aspect-square rounded-2xl bg-white/[0.04] border border-white/10 hover:border-purple-500/50 flex items-center justify-center p-4 transition-all duration-300 shadow-xl group-hover:bg-white/[0.08] group-hover:scale-105">
                 <img
                   src={item.file}
                   alt={item.name}
