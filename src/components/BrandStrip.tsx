@@ -15,24 +15,25 @@ export function BrandStrip() {
   const startOffsetRef = useRef(0);
   const singleWidthRef = useRef(0);
 
+  // Client Logos (Original colors with transparent background)
   const clientLogos = [
-    { name: "Netflix", file: "/client-logos/processed/Netflix.png", isWhite: true },
-    { name: "Rock in Rio", file: "/client-logos/processed/Rock in rio.png", isWhite: true },
-    { name: "Loud", file: "/client-logos/processed/Loud.png", isWhite: true },
-    { name: "Santander", file: "/client-logos/processed/Santander.png", isWhite: true },
-    { name: "WWE / Topps", file: "/client-logos/processed/wwe.png", isWhite: true },
-    { name: "Audible", file: "/client-logos/processed/Audible.png", isWhite: true },
+    { name: "Netflix", file: "/client-logos/processed/Netflix.png" },
+    { name: "Rock in Rio", file: "/client-logos/processed/Rock in Rio.png" },
+    { name: "Loud", file: "/client-logos/processed/Loud.png" },
+    { name: "Santander", file: "/client-logos/processed/Santander.png" },
+    { name: "WWE / Topps", file: "/client-logos/processed/WWE.png" },
+    { name: "Audible", file: "/client-logos/processed/Audible.png" },
     { name: "Coca-Cola", file: "/client-logos/processed/Coca.png" },
     { name: "Disney", file: "/client-logos/processed/Disney.png" },
     { name: "MrBeast", file: "/client-logos/processed/MrBeast.png" },
     { name: "Nescau", file: "/client-logos/processed/Nescau.png" },
     { name: "Hyundai", file: "/client-logos/processed/Hyundai.png" },
     { name: "Globo", file: "/client-logos/processed/Globo.png" },
-    { name: "BIC", file: "/client-logos/processed/BIC.png" },
+    { name: "BIC", file: "/client-logos/processed/Bic.png" },
     { name: "Dell", file: "/client-logos/processed/Dell.png" },
     { name: "Reserva", file: "/client-logos/processed/Reserva.png" },
     { name: "CIF", file: "/client-logos/processed/Cif.png" },
-    { name: "Away", file: "/client-logos/processed/away.png" },
+    { name: "Away", file: "/client-logos/processed/Away.png" },
   ];
 
   // 4x duplication guarantees plenty of buffer for seamless wrap-around at any screen size
@@ -181,11 +182,7 @@ export function BrandStrip() {
                   src={item.file}
                   alt={item.name}
                   draggable={false}
-                  className={`max-h-16 max-w-[95px] w-auto h-auto object-contain transition-all duration-300 ${
-                    item.isWhite
-                      ? "filter brightness-200 opacity-90 group-hover:opacity-100"
-                      : "filter grayscale brightness-125 opacity-70 group-hover:filter-none group-hover:opacity-100"
-                  }`}
+                  className="max-h-16 max-w-[95px] w-auto h-auto object-contain transition-all duration-500 filter grayscale opacity-60 contrast-125 brightness-110 group-hover:filter-none group-hover:opacity-100 group-hover:scale-105"
                 />
               </div>
 
