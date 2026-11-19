@@ -88,7 +88,7 @@ export function Hero() {
             <img
               src={
                 activeReelKey === "compositing"
-                  ? "https://img.youtube.com/vi/YTH5TMSUSeM/maxresdefault.jpg"
+                  ? "/hero-thumb.png"
                   : "https://i.vimeocdn.com/video/1876140406-8a566583eb2c60e1c7a84e5b63aaa9168e645b641194414537dcccc83c1e1b85-d_1280x720"
               }
               alt={activeReel.title}
