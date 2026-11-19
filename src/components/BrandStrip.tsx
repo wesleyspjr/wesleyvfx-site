@@ -18,10 +18,10 @@ export function BrandStrip() {
   // Client Logos (Original colors with transparent background)
   const clientLogos = [
     { name: "Netflix", file: "/client-logos/processed/Netflix.png" },
-    { name: "Rock in Rio", file: "/client-logos/processed/Rock in Rio.png" },
+    { name: "Rock in Rio", file: "/client-logos/processed/Rock in rio.png" },
     { name: "Loud", file: "/client-logos/processed/Loud.png" },
     { name: "Santander", file: "/client-logos/processed/Santander.png" },
-    { name: "WWE / Topps", file: "/client-logos/processed/WWE.png" },
+    { name: "WWE / Topps", file: "/client-logos/processed/wwe.png" },
     { name: "Audible", file: "/client-logos/processed/Audible.png" },
     { name: "Coca-Cola", file: "/client-logos/processed/Coca.png" },
     { name: "Disney", file: "/client-logos/processed/Disney.png" },
@@ -29,11 +29,11 @@ export function BrandStrip() {
     { name: "Nescau", file: "/client-logos/processed/Nescau.png" },
     { name: "Hyundai", file: "/client-logos/processed/Hyundai.png" },
     { name: "Globo", file: "/client-logos/processed/Globo.png" },
-    { name: "BIC", file: "/client-logos/processed/Bic.png" },
+    { name: "BIC", file: "/client-logos/processed/BIC.png" },
     { name: "Dell", file: "/client-logos/processed/Dell.png" },
     { name: "Reserva", file: "/client-logos/processed/Reserva.png" },
     { name: "CIF", file: "/client-logos/processed/Cif.png" },
-    { name: "Away", file: "/client-logos/processed/Away.png" },
+    { name: "Away", file: "/client-logos/processed/away.png" },
   ];
 
   // 4x duplication guarantees plenty of buffer for seamless wrap-around at any screen size
