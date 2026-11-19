@@ -32,7 +32,7 @@ export function BrandStrip() {
     { name: "BIC", file: "/client-logos/processed/BIC.png" },
     { name: "Dell", file: "/client-logos/processed/Dell.png" },
     { name: "Reserva", file: "/client-logos/processed/Reserva.png" },
-    { name: "CIF", file: "/client-logos/processed/Cif.png" },
+    { name: "CIF", file: "/client-logos/processed/cif.png" },
     { name: "Away", file: "/client-logos/processed/away.png" },
   ];
 
