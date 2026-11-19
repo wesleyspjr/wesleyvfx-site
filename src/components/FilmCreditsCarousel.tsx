@@ -33,6 +33,14 @@ export function FilmCreditsCarousel() {
       badge: "VENICE FILM FESTIVAL",
     },
     {
+      title: "MrBeast: Beast Games / Productions",
+      subtitle: "Prime Video / Global YouTube",
+      role: isPt ? "Artista de Efeitos Visuais" : "Visual Effects Artist",
+      year: "2025/2026",
+      poster: "/imdb-posters/MrBeast.jpg",
+      badge: "GLOBAL PRODUCTION",
+    },
+    {
       title: "Passinho: O Ritmo do Sonho",
       subtitle: "Disney+ Original Series",
       role: isPt ? "Efeitos Visuais & Motion" : "Visual Effects & Motion",
