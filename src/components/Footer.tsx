@@ -9,7 +9,7 @@ export function Footer() {
   const [timeSP, setTimeSP] = useState<string>("");
   const [timeUTC, setTimeUTC] = useState<string>("");
   const [currentYear, setCurrentYear] = useState<number>(2026);
-  const { t } = useLanguage();
+  const { lang, t } = useLanguage();
 
   useEffect(() => {
     const updateTime = () => {
@@ -36,6 +36,8 @@ export function Footer() {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  const resumeUrl = PROFILE.contacts.resumePdf[lang];
 
   return (
     <footer className="w-full border-t border-neutral-900 bg-neutral-950 pt-20 pb-14 text-neutral-400">
@@ -68,7 +70,7 @@ export function Footer() {
             ))}
             <span className="text-neutral-700">/</span>
             <a
-              href={PROFILE.contacts.resumePdf}
+              href={resumeUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="text-white hover:text-neutral-300 transition-colors"

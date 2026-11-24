@@ -17,6 +17,8 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const resumeUrl = PROFILE.contacts.resumePdf[lang];
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 flex justify-center p-4 sm:p-5 transition-all duration-300">
       <nav
@@ -43,12 +45,6 @@ export function Navbar() {
           </a>
           <a href="#works" className="hover:text-white transition-colors">
             {t("nav.works")}
-          </a>
-          <a href="#breakdown" className="hover:text-white transition-colors">
-            {t("nav.breakdown")}
-          </a>
-          <a href="#pipeline" className="hover:text-white transition-colors">
-            {t("nav.pipeline")}
           </a>
           <a href="#contact" className="hover:text-white transition-colors">
             {t("nav.contact")}
@@ -103,7 +99,7 @@ export function Navbar() {
           </div>
 
           <a
-            href={PROFILE.contacts.resumePdf}
+            href={resumeUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="hidden sm:inline-flex items-center gap-1 text-[11px] font-mono tracking-widest text-neutral-400 hover:text-white transition-colors"

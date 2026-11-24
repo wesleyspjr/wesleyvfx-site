@@ -2,13 +2,11 @@
 
 import { LanguageProvider } from "@/context/LanguageContext";
 import { Starfield } from "@/components/Starfield";
-import { CustomCursor } from "@/components/CustomCursor";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { BrandStrip } from "@/components/BrandStrip";
 import { FilmCreditsCarousel } from "@/components/FilmCreditsCarousel";
 import { SelectedProjects } from "@/components/SelectedProjects";
-import { StudioSpecs } from "@/components/StudioSpecs";
 import { ContactSection } from "@/components/ContactSection";
 import { Footer } from "@/components/Footer";
 
@@ -17,13 +15,11 @@ export default function Home() {
     <LanguageProvider>
       <main className="min-h-screen bg-[#04040a] text-neutral-100 flex flex-col selection:bg-purple-500 selection:text-white relative">
         <Starfield />
-        <CustomCursor />
         <Navbar />
         <Hero />
         <BrandStrip />
         <FilmCreditsCarousel />
         <SelectedProjects />
-        <StudioSpecs />
         <ContactSection />
         <Footer />
       </main>

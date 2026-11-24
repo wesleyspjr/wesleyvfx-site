@@ -14,7 +14,7 @@ export function Hero() {
   const activeReel = PROFILE.reels[activeReelKey];
 
   return (
-    <section id="hero" className="relative min-h-[96vh] pt-32 pb-24 flex flex-col justify-center items-center px-4 sm:px-6 overflow-hidden"><div id="reels" className="absolute top-0 pointer-events-none" />
+    <section id="hero" className="relative min-h-[96vh] pt-32 pb-24 flex flex-col justify-center items-center px-4 sm:px-6 overflow-hidden isolate">
       {/* Background High-Definition Original Action VFX Video (No blue halo, no banding) */}
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
         <video
@@ -80,7 +80,6 @@ export function Hero() {
 
           {/* Reel Display Card */}
           <div
-            data-cursor="play"
             onClick={() => setModalOpen(true)}
             className="group relative w-full aspect-[16/9] rounded-2xl overflow-hidden border border-purple-500/20 bg-neutral-950 cursor-pointer shadow-2xl transition-all duration-500 hover:border-purple-500/50 hover:shadow-purple-950/30"
           >
@@ -88,7 +87,7 @@ export function Hero() {
             <img
               src={
                 activeReelKey === "compositing"
-                  ? "/hero-thumb.png"
+                  ? "https://img.youtube.com/vi/YTH5TMSUSeM/maxresdefault.jpg"
                   : "https://i.vimeocdn.com/video/1876140406-8a566583eb2c60e1c7a84e5b63aaa9168e645b641194414537dcccc83c1e1b85-d_1280x720"
               }
               alt={activeReel.title}
@@ -149,7 +148,6 @@ export function Hero() {
         youtubeId={activeReel.youtubeId}
         vimeoId={activeReel.vimeoId}
         title={activeReel.title}
-        showControlsDeck={true}
       />
     </section>
   );

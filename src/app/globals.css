@@ -37,12 +37,7 @@
   }
 }
 
-/* Hide native cursor on desktop so the custom dot+ring cursor takes over */
-@media (pointer: fine) and (hover: hover) {
-  html, body, a, button, input, [role="button"] {
-    cursor: none !important;
-  }
-}
+
 
 /* Starfield Twinkle Keyframe */
 @keyframes twinkle {
