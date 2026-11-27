@@ -42,7 +42,7 @@ export function Footer() {
   return (
     <footer className="w-full border-t border-neutral-900 bg-neutral-950 pt-20 pb-14 text-neutral-400">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 pb-14 border-b border-neutral-900">
+        <div className="flex flex-col md:flex-row items-start justify-between gap-8 md:gap-12 pb-14 border-b border-neutral-900">
           <div>
             <div className="flex items-center gap-2 mb-2">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
@@ -55,38 +55,40 @@ export function Footer() {
             </p>
           </div>
 
-          {/* Social Links */}
-          <div className="flex flex-wrap items-center gap-5 text-xs font-mono tracking-widest">
-            {PROFILE.contacts.socials.map((s) => (
+          {/* Right Group: Social Links + Back to top */}
+          <div className="flex flex-wrap items-center gap-5 sm:gap-6 text-xs font-mono tracking-widest pt-0.5">
+            <div className="flex flex-wrap items-center gap-4 sm:gap-5">
+              {PROFILE.contacts.socials.map((s) => (
+                <a
+                  key={s.name}
+                  href={s.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-neutral-400 hover:text-white transition-colors"
+                >
+                  {s.name}
+                </a>
+              ))}
+              <span className="text-neutral-700">/</span>
               <a
-                key={s.name}
-                href={s.url}
+                href={resumeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-neutral-400 hover:text-white transition-colors"
+                className="text-white hover:text-neutral-300 transition-colors"
               >
-                {s.name}
+                {t("footer.resume")}
               </a>
-            ))}
-            <span className="text-neutral-700">/</span>
-            <a
-              href={resumeUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white hover:text-neutral-300 transition-colors"
-            >
-              {t("footer.resume")}
-            </a>
-          </div>
+            </div>
 
-          {/* Back to top */}
-          <button
-            onClick={scrollToTop}
-            className="flex items-center gap-2 text-xs font-mono text-neutral-400 hover:text-white transition-colors px-3 py-2 rounded-lg bg-neutral-900 border border-neutral-800"
-          >
-            <span>{t("footer.top")}</span>
-            <ArrowUp className="w-3.5 h-3.5" />
-          </button>
+            {/* Back to top */}
+            <button
+              onClick={scrollToTop}
+              className="flex items-center gap-2 text-xs font-mono text-neutral-400 hover:text-white transition-colors px-3 py-1.5 rounded-lg bg-neutral-900 border border-neutral-800 hover:border-neutral-700 active:scale-95"
+            >
+              <span>{t("footer.top")}</span>
+              <ArrowUp className="w-3.5 h-3.5" />
+            </button>
+          </div>
         </div>
 
         {/* Bottom Timecodes & Legal */}
