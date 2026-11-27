@@ -52,7 +52,7 @@ export function Hero() {
         </p>
 
         {/* Reel Tab Switcher */}
-        <div id="reels" className="w-full max-w-4xl flex flex-col items-center">
+        <div id="reels" className="w-full max-w-5xl lg:max-w-6xl flex flex-col items-center">
           <div className="flex items-center p-1 rounded-xl bg-neutral-900/90 border border-neutral-800/90 backdrop-blur-md mb-6">
             <button
               onClick={() => setActiveReelKey("compositing")}

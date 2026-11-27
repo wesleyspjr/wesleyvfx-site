@@ -326,7 +326,7 @@ export function ReelModal({ isOpen, onClose, youtubeId, vimeoId, videoUrl, title
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-5xl bg-neutral-950 border border-purple-500/30 rounded-2xl overflow-hidden shadow-2xl flex flex-col cursor-default shadow-purple-950/20"
+        className="relative w-full max-w-6xl xl:max-w-7xl bg-neutral-950 border border-purple-500/30 rounded-2xl overflow-hidden shadow-2xl flex flex-col cursor-default shadow-purple-950/20"
       >
         {/* Modal Topbar */}
         <div className="flex items-center justify-between px-5 py-3.5 border-b border-neutral-800 bg-neutral-900/80">
