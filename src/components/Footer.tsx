@@ -42,7 +42,7 @@ export function Footer() {
   return (
     <footer className="w-full border-t border-neutral-900 bg-neutral-950 pt-20 pb-14 text-neutral-400">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="flex flex-col md:flex-row items-start justify-between gap-8 md:gap-12 pb-14 border-b border-neutral-900">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 md:gap-12 pb-14 border-b border-neutral-900">
           <div>
             <div className="flex items-center gap-2 mb-2">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
@@ -56,7 +56,7 @@ export function Footer() {
           </div>
 
           {/* Right Group: Social Links + Back to top */}
-          <div className="flex flex-wrap items-center gap-5 sm:gap-6 text-xs font-mono tracking-widest pt-0.5 md:pt-1">
+          <div className="flex flex-wrap items-center gap-5 sm:gap-6 text-xs font-mono tracking-widest">
             <div className="flex flex-wrap items-center gap-4 sm:gap-5">
               {PROFILE.contacts.socials.map((s) => (
                 <a
