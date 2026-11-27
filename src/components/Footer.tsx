@@ -50,31 +50,31 @@ export function Footer() {
                 WESLEY JUNIOR
               </span>
             </div>
-            <p className="text-xs font-mono text-neutral-500 tracking-wider leading-none">
+            <p className="text-xs font-mono text-neutral-500 tracking-wider">
               {t("footer.role")}
             </p>
           </div>
 
           {/* Right Group: Social Links + Back to top */}
-          <div className="flex flex-wrap items-baseline gap-5 sm:gap-6 text-xs font-mono tracking-widest leading-none">
-            <div className="flex flex-wrap items-baseline gap-4 sm:gap-5">
+          <div className="flex flex-wrap items-end gap-5 sm:gap-6 text-xs font-mono tracking-widest">
+            <div className="flex flex-wrap items-center gap-4 sm:gap-5 self-end py-1.5">
               {PROFILE.contacts.socials.map((s) => (
                 <a
                   key={s.name}
                   href={s.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-neutral-400 hover:text-white transition-colors leading-none"
+                  className="text-neutral-400 hover:text-white transition-colors"
                 >
                   {s.name}
                 </a>
               ))}
-              <span className="text-neutral-700 leading-none">/</span>
+              <span className="text-neutral-700">/</span>
               <a
                 href={resumeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white hover:text-neutral-300 transition-colors leading-none"
+                className="text-white hover:text-neutral-300 transition-colors"
               >
                 {t("footer.resume")}
               </a>
