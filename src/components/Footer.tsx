@@ -50,31 +50,31 @@ export function Footer() {
                 WESLEY JUNIOR
               </span>
             </div>
-            <p className="text-xs font-mono text-neutral-500 tracking-wider">
+            <p className="text-xs font-mono text-neutral-500 tracking-wider leading-none">
               {t("footer.role")}
             </p>
           </div>
 
           {/* Right Group: Social Links + Back to top */}
-          <div className="flex flex-wrap items-center gap-5 sm:gap-6 text-xs font-mono tracking-widest">
-            <div className="flex flex-wrap items-center gap-4 sm:gap-5">
+          <div className="flex flex-wrap items-baseline gap-5 sm:gap-6 text-xs font-mono tracking-widest leading-none">
+            <div className="flex flex-wrap items-baseline gap-4 sm:gap-5">
               {PROFILE.contacts.socials.map((s) => (
                 <a
                   key={s.name}
                   href={s.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-neutral-400 hover:text-white transition-colors"
+                  className="text-neutral-400 hover:text-white transition-colors leading-none"
                 >
                   {s.name}
                 </a>
               ))}
-              <span className="text-neutral-700">/</span>
+              <span className="text-neutral-700 leading-none">/</span>
               <a
                 href={resumeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white hover:text-neutral-300 transition-colors"
+                className="text-white hover:text-neutral-300 transition-colors leading-none"
               >
                 {t("footer.resume")}
               </a>
@@ -83,7 +83,7 @@ export function Footer() {
             {/* Back to top */}
             <button
               onClick={scrollToTop}
-              className="flex items-center gap-2 text-xs font-mono text-neutral-400 hover:text-white transition-colors px-3 py-1.5 rounded-lg bg-neutral-900 border border-neutral-800 hover:border-neutral-700 active:scale-95"
+              className="inline-flex items-center gap-2 text-xs font-mono text-neutral-400 hover:text-white transition-colors px-3 py-1.5 rounded-lg bg-neutral-900 border border-neutral-800 hover:border-neutral-700 active:scale-95 self-end"
             >
               <span>{t("footer.top")}</span>
               <ArrowUp className="w-3.5 h-3.5" />
