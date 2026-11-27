@@ -57,7 +57,7 @@ export function Footer() {
 
           {/* Right Group: Social Links + Back to top */}
           <div className="flex flex-wrap items-end gap-5 sm:gap-6 text-xs font-mono tracking-widest">
-            <div className="flex flex-wrap items-center gap-4 sm:gap-5 self-end py-1.5">
+            <div className="flex flex-wrap items-center gap-4 sm:gap-5 self-end py-1.5 md:translate-y-[2px]">
               {PROFILE.contacts.socials.map((s) => (
                 <a
                   key={s.name}
